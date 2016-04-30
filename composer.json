@@ -1,0 +1,22 @@
+{
+    "name": "lagdo/xajax-laravel",
+    "type": "library",
+    "description": "Xajax library integration for the Laravel framework",
+    "authors": [
+        {
+            "name": "Thierry Feuzeu",
+            "email": "thierry.feuzeu@lagdo-software.net"
+        }
+    ],
+    "keywords": ["Ajax", "Xajax", "PHP", "Laravel"],
+    "license": "BSD-2-Clause",
+    "require": {
+        "lagdo/xajax-core": "dev-master",
+        "illuminate/support": "5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Xajax\\Laravel\\": "src/"
+        }
+    }
+}
