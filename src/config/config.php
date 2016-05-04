@@ -5,7 +5,6 @@ return array(
 		// 'route' => '',
 		// 'namespace' => '',
 		// 'controllers' => '',
-		// 'extensions' => '',
 		// 'excluded' => [],
 	),
 	'lib' => array(
@@ -22,7 +21,6 @@ return array(
 				// 'dir' => '',
 				'merge' => true,
 				'minify' => true,
-				'dir' => 'deferred',
 			),
 			'debug' => array(
 				'on' => false,

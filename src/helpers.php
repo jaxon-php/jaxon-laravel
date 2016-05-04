@@ -1,32 +1,47 @@
 <?php
 
+use Xajax\Request\Factory as xr;
+
 /**
  * Return the javascript call to an Xajax controller method
  *
  * @param string|object $controller the controller
  * @param string $method the name of the method
- * @param array $parameters the parameters of the method
- * @return string
+ * @param ... $parameters the parameters of the method
+ * @return object the Xajax request to the method
  */
-function lxCall($controller, $method, array $parameters = array())
+function lxCall($controller, $method)
 {
-	return \App::make('xajax.request')->call($controller, $method, $parameters);
+	if(is_string($controller))
+	{
+		$controller = \App::make('xajax')->controller($controller);
+	}
+	$aArgs = array_slice(func_get_args(), 1);
+	// Make the request
+	return call_user_func_array(array($controller, 'call'), $aArgs);
 }
 
 /**
  * Make the pagination for an Xajax controller method
  *
- * @param integer $itemsTotal the total number of items
+ *@param integer $itemsTotal the total number of items
  * @param integer $itemsPerPage the number of items per page page
- * @param integer $currentPage the current page
+ * @param integer $page the current page
  * @param string|object $controller the controller
  * @param string $method the name of the method
- * @param array $parameters the parameters of the method
+ * @param ... $parameters the parameters of the method
  * @return object the Laravel paginator instance
  */
-function lxPaginator($itemsTotal, $itemsPerPage, $currentPage, $controller, $method, array $parameters = array())
+function lxPaginator($itemsTotal, $itemsPerPage, $currentPage, $controller, $method)
 {
-	return \App::make('xajax.request')->paginator($itemsTotal, $itemsPerPage, $currentPage, $controller, $method, $parameters);
+	if(is_string($controller))
+	{
+		$controller = \App::make('xajax')->controller($controller);
+	}
+	$aArgs = array_slice(func_get_args(), 4);
+	// Make the request
+	$request = call_user_func_array(array($controller, 'request'), $aArgs);
+	return $controller->paginator($itemsTotal, $itemsPerPage, $page, $request);
 }
 
 /**
@@ -37,7 +52,7 @@ function lxPaginator($itemsTotal, $itemsPerPage, $currentPage, $controller, $met
  */
 function lxForm($sFormId)
 {
-	return \App::make('xajax.request')->form($sFormId);
+	return xr::form($sFormId);
 }
 
 /**
@@ -48,7 +63,7 @@ function lxForm($sFormId)
  */
 function lxInput($sInputId)
 {
-	return \App::make('xajax.request')->input($sInputId);
+	return xr::input($sInputId);
 }
 
 /**
@@ -59,7 +74,7 @@ function lxInput($sInputId)
  */
 function lxCheckbox($sInputId)
 {
-	return \App::make('xajax.request')->checked($sInputId);
+	return xr::checked($sInputId);
 }
 
 /**
@@ -70,7 +85,7 @@ function lxCheckbox($sInputId)
  */
 function lxSelect($sInputId)
 {
-	return \App::make('xajax.request')->checked($sInputId);
+	return xr::checked($sInputId);
 }
 
 /**
@@ -81,7 +96,7 @@ function lxSelect($sInputId)
  */
 function lxHtml($sElementId)
 {
-	return \App::make('xajax.request')->html($sElementId);
+	return xr::html($sElementId);
 }
 
 /**
@@ -92,7 +107,7 @@ function lxHtml($sElementId)
  */
 function lxString($sValue)
 {
-	return \App::make('xajax.request')->string($sValue);
+	return xr::string($sValue);
 }
 
 /**
@@ -103,7 +118,7 @@ function lxString($sValue)
  */
 function lxNumeric($nValue)
 {
-	return \App::make('xajax.request')->numeric($nValue);
+	return xr::numeric($nValue);
 }
 
 /**
@@ -114,7 +129,7 @@ function lxNumeric($nValue)
  */
 function lxInteger($nValue)
 {
-	return \App::make('xajax.request')->integer($nValue);
+	return xr::integer($nValue);
 }
 
 /**
@@ -125,7 +140,7 @@ function lxInteger($nValue)
  */
 function lxJavascript($sValue)
 {
-	return \App::make('xajax.request')->javascript($sValue);
+	return xr::javascript($sValue);
 }
 
 /**
@@ -135,5 +150,5 @@ function lxJavascript($sValue)
  */
 function lxPageNumber()
 {
-	return \App::make('xajax.request')->pageNumber();
+	return xr::pageNumber();
 }

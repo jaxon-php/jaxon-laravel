@@ -1,4 +1,6 @@
-<?php namespace \Xajax\Laravel\Facades;
+<?php
+
+namespace Xajax\Laravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

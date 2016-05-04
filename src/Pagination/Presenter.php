@@ -1,4 +1,6 @@
-<?php namespace \Xajax\Laravel\Pagination;
+<?php
+
+namespace Xajax\Laravel\Pagination;
 
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Illuminate\Pagination\BootstrapThreeNextPreviousButtonRendererTrait;
@@ -23,7 +25,7 @@ class Presenter extends BootstrapThreePresenter
 	 * @param  \\Xajax\Laravel\Request						 $xajaxRequest
 	 * @return void
 	 */
-	public function __construct(Paginator $paginator, $xajaxRequest)
+	public function __construct(Paginator $paginator, $currentPage, $xajaxRequest)
 	{
 		parent::__construct($paginator);
 		$this->xajaxRequest = $xajaxRequest;

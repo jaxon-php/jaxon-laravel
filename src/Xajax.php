@@ -1,9 +1,12 @@
-<?php namespace \Xajax\Laravel;
+<?php
+
+namespace Xajax\Laravel;
+
+use Xajax\Plugin\Manager as PluginManager;
 
 class Xajax
 {
 	protected $xajax = null;
-	protected $request = null;
 	protected $response = null;
 
 	protected $preCallback = null;
@@ -19,7 +22,7 @@ class Xajax
 	 *
 	 * @return void
 	 */
-	public function __construct($controllers)
+	public function __construct()
 	{
 		$this->xajax = \Xajax\Xajax::getInstance();
 		$this->response = new Response();
@@ -36,20 +39,6 @@ class Xajax
 	}
 
 	/**
-	 * Get the Xajax request.
-	 *
-	 * @return object  the Xajax request
-	 */
-	public function request()
-	{
-		if(!$this->request)
-		{
-			$this->request = \App::make('lajax.request');
-		}
-		return $this->request;
-	}
-
-	/**
 	 * Get the Xajax response.
 	 *
 	 * @return object  the Xajax response
@@ -60,13 +49,23 @@ class Xajax
 	}
 
 	/**
+	 * Register the Xajax classes.
+	 *
+	 * @return void
+	 */
+	public function register()
+	{
+		$this->xajax->registerClasses();
+	}
+
+	/**
 	 * Get the javascript code generated for all registered classes.
 	 *
 	 * @return string  the javascript code
 	 */
 	public function javascript()
 	{
-		return $this->xajax->getJavascript();
+		return $this->xajax->getJavascript(false);
 	}
 
 	/**
@@ -125,7 +124,6 @@ class Xajax
 			return;
 		}
 		// Placer les données dans le controleur
-		$controller->request = $this->request();
 		$controller->response = $this->response;
 		if(($this->initCallback))
 		{
@@ -143,7 +141,7 @@ class Xajax
 	 */
 	public function controller($classname)
 	{
-		$xajaxPluginManager = \Xajax\Plugin\Manager::getInstance();
+		$xajaxPluginManager = PluginManager::getInstance();
 		$xajaxCallableObjectPlugin = $xajaxPluginManager->getRequestPlugin('CallableObject');
 		if(!$xajaxCallableObjectPlugin || !$xajaxPluginManager->registerClass($classname))
 		{
@@ -215,49 +213,6 @@ class Xajax
 			// Traiter la requete
 			$this->xajax->processRequest();
 		}
-	}
-
-	/**
-	 * Return the javascript call to an Xajax controller method
-	 *
-	 * @param string|object $controller the controller
-	 * @param string $method the name of the method
-	 * @param array $parameters the parameters of the method
-	 * @return string
-	 */
-	public function call($controller, $method, array $parameters = array())
-	{
-		return $this->request()->call($controller, $method, $parameters);
-	}
-
-	/**
-	 * Set an Xajax presenter on a Laravel paginator
-	 *
-	 * @param object $paginator the Laravel paginator
-	 * @param string|object $controller the controller
-	 * @param string $method the name of the method
-	 * @param array $parameters the parameters of the method
-	 * @return object the Laravel paginator instance
-	 */
-	public function setPresenter($paginator, $controller, $method, array $parameters = array())
-	{
-		return $this->request()->setPresenter($paginator, $controller, $method, $parameters);
-	}
-
-	/**
-	 * Make the pagination for an Xajax controller method
-	 *
-	 *@param integer $itemsTotal the total number of items
-	 * @param integer $itemsPerPage the number of items per page page
-	 * @param integer $page the current page
-	 * @param string|object $controller the controller
-	 * @param string $method the name of the method
-	 * @param array $parameters the parameters of the method
-	 * @return object the Laravel paginator instance
-	 */
-	public function paginator($itemsTotal, $itemsPerPage, $page, $controller, $method, array $parameters = array())
-	{
-		return $this->request()->paginator($itemsTotal, $itemsPerPage, $page, $controller, $method, $parameters);
 	}
 }
 

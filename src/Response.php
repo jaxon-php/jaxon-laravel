@@ -1,6 +1,6 @@
 <?php
 
-namespace \Xajax\Laravel;
+namespace Xajax\Laravel;
 
 class Response extends \Xajax\Response\Response
 {

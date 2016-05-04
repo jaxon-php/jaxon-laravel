@@ -1,6 +1,6 @@
 <?php
 
-namespace \Xajax\Laravel;
+namespace Xajax\Laravel;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -46,8 +46,8 @@ class XajaxServiceProvider extends ServiceProvider
 			// Xajax application config
 			$requestRoute = config('xajax.app.route', 'xajax');
 			$controllerDir = config('xajax.app.controllers', app_path() . '/Ajax/Controllers');
-			$namespace = trim(config('xajax.app.namespace'), '\\App\\Xajax');
-
+			$namespace = config('xajax.app.namespace', '\\App\\Xajax');
+	
 			$excluded = config('xajax.app.excluded', array());
 			// The public methods of the Controller base class must not be exported to javascript
 			$controllerClass = new \ReflectionClass('\Xajax\Laravel\Controller');
@@ -56,7 +56,6 @@ class XajaxServiceProvider extends ServiceProvider
 				$excluded[] = $xMethod->getShortName();
 			}
 
-			// Get the Xajax object
 			$xajax = \Xajax\Xajax::getInstance();
 			// Use the Composer autoloader
 			$xajax->useComposerAutoLoader();
@@ -68,7 +67,7 @@ class XajaxServiceProvider extends ServiceProvider
 				'core.js.dir' => public_path('/xajax/js'),
 			));
 			// Xajax library user options
-			\Xajax\Config\Php::read(base_path('/config/xajax.php', 'lib'));
+			\Xajax\Config\Php::read(base_path('/config/xajax.php'), 'lib');
 			// The request URI can be set with a Laravel route
 			if(!$xajax->hasOption('core.request.uri'))
 			{
@@ -76,17 +75,8 @@ class XajaxServiceProvider extends ServiceProvider
 			}
 			// Register the default Xajax class directory
 			$xajax->addClassDir($controllerDir, $namespace, $excluded);
-			$xajax->registerClasses();
 
 			return new Xajax();
-		});
-		
-		// Register the Xajax Request singleton
-		$this->app->singleton('xajax.request', function ()
-		{
-			// Create the Xajax Request object
-			$request = new Request();
-			return $request;
 		});
 	}
 
@@ -98,7 +88,7 @@ class XajaxServiceProvider extends ServiceProvider
 	public function provides()
 	{
 		return array(
-			'xajax, xajax.request'
+			'xajax'
 		);
 	}
 }
