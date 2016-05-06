@@ -8,6 +8,8 @@ class Xajax
 {
 	protected $xajax = null;
 	protected $response = null;
+	protected $pluginManager = null;
+	protected $requestPlugin = null;
 
 	protected $preCallback = null;
 	protected $postCallback = null;
@@ -26,6 +28,8 @@ class Xajax
 	{
 		$this->xajax = \Xajax\Xajax::getInstance();
 		$this->response = new Response();
+		$this->pluginManager = PluginManager::getInstance();
+		$this->requestPlugin = $this->pluginManager->getRequestPlugin('CallableObject');
 	}
 
 	/**
@@ -141,13 +145,14 @@ class Xajax
 	 */
 	public function controller($classname)
 	{
-		$xajaxPluginManager = PluginManager::getInstance();
-		$xajaxCallableObjectPlugin = $xajaxPluginManager->getRequestPlugin('CallableObject');
-		if(!$xajaxCallableObjectPlugin || !$xajaxPluginManager->registerClass($classname))
+		if(!$this->pluginManager->registerClass($classname))
 		{
 			return null;
 		}
-		$controller = $xajaxCallableObjectPlugin->getRegisteredObject($classname);
+		if(!($controller = $this->requestPlugin->getRegisteredObject($classname)))
+		{
+			return null;
+		}
 		$this->initController($controller);
 		return $controller;
 	}
