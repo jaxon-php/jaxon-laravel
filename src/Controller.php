@@ -3,6 +3,7 @@
 namespace Xajax\Laravel;
 
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
+use App;
 
 class Controller
 {
@@ -90,5 +91,26 @@ class Controller
 		}
 		$paginator = new Paginator(array(), $itemsTotal, $itemsPerPage, $currentPage);
 		return $this->setPresenter($paginator, $currentPage, $request);
+	}
+
+	/**
+	 * Find an Xajax controller by name
+	 *
+	 * @param string $method the name of the method
+	 * @return object the Xajax controller, or null
+	 */
+	final public function controller($name)
+	{
+		// If the class name starts with a dot, then find the class in the same class path as the caller
+		if(substr($name, 0, 1) == '.')
+		{
+			$name = $this->getXajaxClassPath() . $name;
+		}
+		// The configured namespace is prepended to the class name
+		else if(($namespace = $this->getXajaxNamespace()))
+		{
+			$name = str_replace(array('\\'), array('.'), trim($namespace, '\\')) . '.' . $name;
+		}
+		return App::make('xajax')->controller($name);
 	}
 }
