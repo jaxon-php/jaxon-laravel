@@ -15,19 +15,24 @@ return array(
 				'class' => 'Xajax',
 				'function' => 'xajax_',
 			),
-			'js' => array(
-				// 'lib_uri' => '',
-				// 'lib' => '',
-				// 'dir' => '',
-				'merge' => true,
-				'minify' => true,
-			),
 			'debug' => array(
 				'on' => false,
 				'verbose' => false,
 			),
 			'error' => array(
 				'handle' => false,
+			),
+		),
+		'js' => array(
+			'lib' => array(
+				// 'uri' => '',
+			),
+			'app' => array(
+				// 'uri' => '',
+				// 'dir' => '',
+				'merge' => false,
+				'minify' => true,
+				'options' => '',
 			),
 		),
 	),
