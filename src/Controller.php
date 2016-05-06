@@ -99,7 +99,7 @@ class Controller
 	 * @param string $method the name of the method
 	 * @return object the Xajax controller, or null
 	 */
-	final public function controller($name)
+	public function controller($name)
 	{
 		// If the class name starts with a dot, then find the class in the same class path as the caller
 		if(substr($name, 0, 1) == '.')
