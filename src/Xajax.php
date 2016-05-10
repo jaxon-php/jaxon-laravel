@@ -7,6 +7,7 @@ use Xajax\Plugin\Manager as PluginManager;
 class Xajax
 {
 	protected $xajax = null;
+	protected $validator = null;
 	protected $response = null;
 
 	protected $preCallback = null;
@@ -25,6 +26,7 @@ class Xajax
 	public function __construct()
 	{
 		$this->xajax = \Xajax\Xajax::getInstance();
+		$this->validator = \Xajax\Utils\Container::getInstance()->getValidator();
 		$this->response = new Response();
 	}
 
@@ -158,15 +160,23 @@ class Xajax
 	 */
 	public function preProcess(&$bEndRequest)
 	{
-		// Instanciate the called class
+		// Validate the inputs
 		$class = $_POST['xjxcls'];
 		$method = $_POST['xjxmthd'];
+		if(!$this->validator->validateClass($class) || !$this->validator->validateMethod($method))
+		{
+			// End the request processing if the input data are not valid.
+			// Todo: write an error message in the response
+			$bEndRequest = true;
+			return $this->response;
+		}
 		// Instanciate the controller. This will include the required file.
 		$this->controller = $this->controller($class);
 		$this->method = $method;
 		if(!$this->controller)
 		{
 			// End the request processing if a controller cannot be found.
+			// Todo: write an error message in the response
 			$bEndRequest = true;
 			return $this->response;
 		}
