@@ -30,7 +30,7 @@ return array(
 			'app' => array(
 				// 'uri' => '',
 				// 'dir' => '',
-				'merge' => false,
+				'export' => false,
 				'minify' => true,
 				'options' => '',
 			),
