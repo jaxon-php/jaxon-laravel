@@ -8,8 +8,6 @@ class Xajax
 {
 	protected $xajax = null;
 	protected $response = null;
-	protected $pluginManager = null;
-	protected $requestPlugin = null;
 
 	protected $preCallback = null;
 	protected $postCallback = null;
@@ -28,8 +26,6 @@ class Xajax
 	{
 		$this->xajax = \Xajax\Xajax::getInstance();
 		$this->response = new Response();
-		$this->pluginManager = PluginManager::getInstance();
-		$this->requestPlugin = $this->pluginManager->getRequestPlugin('CallableObject');
 	}
 
 	/**
@@ -141,15 +137,12 @@ class Xajax
 	 * Get a controller instance.
 	 *
 	 * @param  string  $classname the controller class name
-	 * @return object  an instance of the controller
+	 * @return object  The registered instance of the controller
 	 */
 	public function controller($classname)
 	{
-		if(!$this->pluginManager->registerClass($classname))
-		{
-			return null;
-		}
-		if(!($controller = $this->requestPlugin->getRegisteredObject($classname)))
+		$controller = $this->xajax->registerClass($classname, true);
+		if(!$controller)
 		{
 			return null;
 		}
@@ -168,7 +161,6 @@ class Xajax
 		// Instanciate the called class
 		$class = $_POST['xjxcls'];
 		$method = $_POST['xjxmthd'];
-		// Todo : check and sanitize $class and $method inputs
 		// Instanciate the controller. This will include the required file.
 		$this->controller = $this->controller($class);
 		$this->method = $method;
