@@ -50,7 +50,7 @@ class XajaxServiceProvider extends ServiceProvider
 	
 			$excluded = config('xajax.app.excluded', array());
 			// The public methods of the Controller base class must not be exported to javascript
-			$controllerClass = new \ReflectionClass('\Xajax\Laravel\Controller');
+			$controllerClass = new \ReflectionClass('\\Xajax\\Laravel\\Controller');
 			foreach ($controllerClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $xMethod)
 			{
 				$excluded[] = $xMethod->getShortName();
@@ -61,10 +61,10 @@ class XajaxServiceProvider extends ServiceProvider
 			$xajax->useComposerAutoLoader();
 			// Xajax library default options
 			$xajax->setOptions(array(
-				'core.js.merge' => false,
-				'core.js.minify' => false,
-				'core.js.lib' => asset('/xajax/js'),
-				'core.js.dir' => public_path('/xajax/js'),
+				'js.app.export' => !config('app.debug', false),
+				'js.app.minify' => !config('app.debug', false),
+				'js.app.uri' => asset('/xajax/js'),
+				'js.app.dir' => public_path('/xajax/js'),
 			));
 			// Xajax library user options
 			\Xajax\Config\Php::read(base_path('/config/xajax.php'), 'lib');
