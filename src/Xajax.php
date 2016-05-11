@@ -61,6 +61,16 @@ class Xajax
 	}
 
 	/**
+	 * Register a specified Xajax class.
+	 *
+	 * @return void
+	 */
+	public function registerClass($sClassName)
+	{
+		$this->xajax->registerClass($sClassName);
+	}
+
+	/**
 	 * Get the javascript code generated for all registered classes.
 	 *
 	 * @return string  the javascript code
@@ -77,7 +87,17 @@ class Xajax
 	 */
 	public function js()
 	{
-		return $this->xajax->getJavascript();
+		return $this->xajax->getJsInclude();
+	}
+
+	/**
+	 * Get the javascript code generated for all registered classes.
+	 *
+	 * @return string  the javascript code
+	 */
+	public function css()
+	{
+		return $this->xajax->getCssInclude();
 	}
 
 	/**
@@ -126,6 +146,7 @@ class Xajax
 			return;
 		}
 		// Placer les données dans le controleur
+		$controller->view = new View($controller);
 		$controller->response = $this->response;
 		if(($this->initCallback))
 		{
@@ -222,5 +243,3 @@ class Xajax
 		}
 	}
 }
-
-?>
