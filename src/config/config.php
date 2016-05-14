@@ -3,17 +3,16 @@
 return array(
 	'app' => array(
 		// 'route' => '',
+		// 'dir' => '',
 		// 'namespace' => '',
-		// 'controllers' => '',
-		// 'excluded' => [],
+		// 'excluded' => array(),
 	),
 	'lib' => array(
 		'core' => array(
 			'language' => 'en',
 			'encoding' => 'UTF-8',
 			'prefix' => array(
-				'class' => 'Xajax',
-				'function' => 'xajax_',
+				'class' => '',
 			),
 			'debug' => array(
 				'on' => false,

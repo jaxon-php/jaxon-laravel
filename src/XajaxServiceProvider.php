@@ -45,7 +45,7 @@ class XajaxServiceProvider extends ServiceProvider
 		{
 			// Xajax application config
 			$requestRoute = config('xajax.app.route', 'xajax');
-			$controllerDir = config('xajax.app.controllers', app_path() . '/Ajax/Controllers');
+			$controllerDir = config('xajax.app.dir', app_path() . '/Ajax/Controllers');
 			$namespace = config('xajax.app.namespace', '\\App\\Xajax');
 	
 			$excluded = config('xajax.app.excluded', array());
