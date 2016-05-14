@@ -9,6 +9,7 @@ class Xajax
 	protected $xajax = null;
 	protected $validator = null;
 	protected $response = null;
+	protected $view = null;
 
 	protected $preCallback = null;
 	protected $postCallback = null;
@@ -28,6 +29,7 @@ class Xajax
 		$this->xajax = \Xajax\Xajax::getInstance();
 		$this->validator = \Xajax\Utils\Container::getInstance()->getValidator();
 		$this->response = new Response();
+		$this->view = new \Xajax\Laravel\View();
 	}
 
 	/**
@@ -146,7 +148,6 @@ class Xajax
 			return;
 		}
 		// Placer les données dans le controleur
-		$controller->view = new View($controller);
 		$controller->response = $this->response;
 		if(($this->initCallback))
 		{
@@ -154,6 +155,11 @@ class Xajax
 			$cb($controller);
 		}
 		$controller->init();
+		// The default view is used only if there is none already set
+		if(!$controller->view)
+		{
+			$controller->view = $this->view;
+		}
 	}
 
 	/**
