@@ -3,15 +3,33 @@
 namespace Xajax\Laravel;
 
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
-use App;
 
 class View
 {
-	protected $controller = null;
-
-	public function __construct($controller)
+	/**
+	 * Make a piece of data available for all views
+	 *
+	 * @param string		$name			The data name
+	 * @param string		$value			The data value
+	 * 
+	 * @return void
+	 */
+	public function share($name, $value)
 	{
-		$this->controller = $controller;
+		view()->share($name, $value);
+	}
+
+	/**
+	 * Render a template
+	 *
+	 * @param string		$template		The template path
+	 * @param string		$data			The template data
+	 * 
+	 * @return mixed		The rendered template
+	 */
+	public function render($template, array $data = array())
+	{
+		return view()->make($template, $data);
 	}
 
 	/**
@@ -22,9 +40,10 @@ class View
 	 * @param string|object $controller the controller
 	 * @param string $method the name of the method
 	 * @param array $parameters the parameters of the method
-	 * @return object the Laravel paginator instance
+
+	 * @return void
 	 */
-	public function setPresenter($paginator, $currentPage, $request)
+	public static function setPresenter($paginator, $currentPage, $request)
 	{
 		// Append the page number to the parameter list, if not yet given.
 		if(!$request->hasPageNumber())
@@ -36,34 +55,5 @@ class View
 		{
 			return new Pagination\Presenter($paginator, $currentPage, $request);
 		});
-		return $paginator;
-	}
-
-	/**
-	 * Make the pagination for an Xajax controller method, and share the paginator in the view
-	 *
-	 * @param integer $itemsTotal the total number of items
-	 * @param integer $itemsPerPage the number of items per page page
-	 * @param integer $currentPage the current page
-	 * @param string $method the name of the method
-	 * @param ... $parameters the parameters of the method
-	 * @return object the Laravel paginator instance
-	 */
-	public function paginate($itemsTotal, $itemsPerPage, $currentPage, $method)
-	{
-		if($method instanceof \Xajax\Request\Request)
-		{
-			$request = $method;
-		}
-		else
-		{
-			$aArgs = array_slice(func_get_args(), 3);
-			// Make the request
-			$request = call_user_func_array(array($this->controller, 'request'), $aArgs);
-		}
-		$paginator = new Paginator(array(), $itemsTotal, $itemsPerPage, $currentPage);
-		$this->setPresenter($paginator, $currentPage, $request);
-		view()->share('paginator', $paginator);
-		return $paginator;
 	}
 }

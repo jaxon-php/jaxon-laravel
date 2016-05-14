@@ -30,18 +30,20 @@ function lxCall($controller, $method)
  * @param string|object $controller the controller
  * @param string $method the name of the method
  * @param ... $parameters the parameters of the method
- * @return object the Laravel paginator instance
+ * 
+ * @return string the pagination links
  */
-function lxPaginator($itemsTotal, $itemsPerPage, $currentPage, $controller, $method)
+function lxPaginate($itemsTotal, $itemsPerPage, $currentPage, $controller, $method)
 {
 	if(is_string($controller))
 	{
 		$controller = \App::make('xajax')->controller($controller);
 	}
-	$aArgs = array_slice(func_get_args(), 4);
-	// Make the request
-	$request = call_user_func_array(array($controller, 'request'), $aArgs);
-	return $controller->paginator($itemsTotal, $itemsPerPage, $page, $request);
+	// Remove the controller from the args array
+	$aArgs = func_get_args();
+	array_splice($aArgs, 3, 1);
+	// Make the pagination
+	return call_user_func_array(array($controller, 'paginate'), $aArgs);
 }
 
 /**
