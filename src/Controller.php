@@ -2,7 +2,6 @@
 
 namespace Xajax\Laravel;
 
-use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App;
 
 class Controller
