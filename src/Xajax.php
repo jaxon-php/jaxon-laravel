@@ -73,33 +73,33 @@ class Xajax
 	}
 
 	/**
-	 * Get the javascript code generated for all registered classes.
+	 * Get the javascript code to be sent to the browser.
 	 *
 	 * @return string  the javascript code
 	 */
-	public function javascript()
+	public function script($bIncludeJs = false, $bIncludeCss = false)
 	{
-		return $this->xajax->getJavascript(false);
+		return $this->xajax->getScript($bIncludeJs, $bIncludeCss);
 	}
 
 	/**
-	 * Get the javascript code generated for all registered classes.
+	 * Get the HTML tags to include Xajax javascript files into the page.
 	 *
-	 * @return string  the javascript code
+	 * @return string
 	 */
 	public function js()
 	{
-		return $this->xajax->getJsInclude();
+		return $this->xajax->getJs();
 	}
 
 	/**
-	 * Get the javascript code generated for all registered classes.
+	 * Get the HTML tags to include Xajax CSS code and files into the page.
 	 *
-	 * @return string  the javascript code
+	 * @return string  the css code
 	 */
 	public function css()
 	{
-		return $this->xajax->getCssInclude();
+		return $this->xajax->getCss();
 	}
 
 	/**
