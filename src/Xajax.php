@@ -37,7 +37,7 @@ class Xajax
 	 *
 	 * @return boolean  True if the request is Xajax, false otherwise.
 	 */
-	public function hasRequest()
+	public function canProcessRequest()
 	{
 		return $this->xajax->canProcessRequest();
 	}
