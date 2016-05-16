@@ -45,8 +45,8 @@ class XajaxServiceProvider extends ServiceProvider
 		{
 			// Xajax application config
 			$requestRoute = config('xajax.app.route', 'xajax');
-			$controllerDir = config('xajax.app.dir', app_path() . '/Ajax/Controllers');
-			$namespace = config('xajax.app.namespace', '\\App\\Xajax');
+			$controllerDir = config('xajax.app.dir', app_path() . '/Xajax/Controllers');
+			$namespace = config('xajax.app.namespace', '\\Xajax\\App');
 	
 			$excluded = config('xajax.app.excluded', array());
 			// The public methods of the Controller base class must not be exported to javascript
