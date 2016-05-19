@@ -17,4 +17,4 @@ Route::get('/', function () {
 
 // Route to Xajax request processor
 Route::post(config('xajax.app.route', 'xajax'), array('as' => 'xajax', 'uses' => 'XajaxController@process'));
-	
+    

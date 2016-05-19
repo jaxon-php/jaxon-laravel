@@ -12,13 +12,13 @@ use Xajax\Request\Factory as xr;
  */
 function lxCall($controller, $method)
 {
-	if(is_string($controller))
-	{
-		$controller = \App::make('xajax')->controller($controller);
-	}
-	$aArgs = array_slice(func_get_args(), 1);
-	// Make the request
-	return call_user_func_array(array($controller, 'call'), $aArgs);
+    if(is_string($controller))
+    {
+        $controller = \App::make('xajax')->controller($controller);
+    }
+    $aArgs = array_slice(func_get_args(), 1);
+    // Make the request
+    return call_user_func_array(array($controller, 'call'), $aArgs);
 }
 
 /**
@@ -35,15 +35,15 @@ function lxCall($controller, $method)
  */
 function lxPaginate($itemsTotal, $itemsPerPage, $currentPage, $controller, $method)
 {
-	if(is_string($controller))
-	{
-		$controller = \App::make('xajax')->controller($controller);
-	}
-	// Remove the controller from the args array
-	$aArgs = func_get_args();
-	array_splice($aArgs, 3, 1);
-	// Make the pagination
-	return call_user_func_array(array($controller, 'paginate'), $aArgs);
+    if(is_string($controller))
+    {
+        $controller = \App::make('xajax')->controller($controller);
+    }
+    // Remove the controller from the args array
+    $aArgs = func_get_args();
+    array_splice($aArgs, 3, 1);
+    // Make the pagination
+    return call_user_func_array(array($controller, 'paginate'), $aArgs);
 }
 
 /**
@@ -54,7 +54,7 @@ function lxPaginate($itemsTotal, $itemsPerPage, $currentPage, $controller, $meth
  */
 function lxForm($sFormId)
 {
-	return xr::form($sFormId);
+    return xr::form($sFormId);
 }
 
 /**
@@ -65,7 +65,7 @@ function lxForm($sFormId)
  */
 function lxInput($sInputId)
 {
-	return xr::input($sInputId);
+    return xr::input($sInputId);
 }
 
 /**
@@ -76,7 +76,7 @@ function lxInput($sInputId)
  */
 function lxCheckbox($sInputId)
 {
-	return xr::checked($sInputId);
+    return xr::checked($sInputId);
 }
 
 /**
@@ -87,7 +87,7 @@ function lxCheckbox($sInputId)
  */
 function lxSelect($sInputId)
 {
-	return xr::checked($sInputId);
+    return xr::checked($sInputId);
 }
 
 /**
@@ -98,7 +98,7 @@ function lxSelect($sInputId)
  */
 function lxHtml($sElementId)
 {
-	return xr::html($sElementId);
+    return xr::html($sElementId);
 }
 
 /**
@@ -109,7 +109,7 @@ function lxHtml($sElementId)
  */
 function lxString($sValue)
 {
-	return xr::string($sValue);
+    return xr::string($sValue);
 }
 
 /**
@@ -120,7 +120,7 @@ function lxString($sValue)
  */
 function lxNumeric($nValue)
 {
-	return xr::numeric($nValue);
+    return xr::numeric($nValue);
 }
 
 /**
@@ -131,7 +131,7 @@ function lxNumeric($nValue)
  */
 function lxInteger($nValue)
 {
-	return xr::integer($nValue);
+    return xr::integer($nValue);
 }
 
 /**
@@ -142,7 +142,7 @@ function lxInteger($nValue)
  */
 function lxJavascript($sValue)
 {
-	return xr::javascript($sValue);
+    return xr::javascript($sValue);
 }
 
 /**
@@ -152,5 +152,5 @@ function lxJavascript($sValue)
  */
 function lxPageNumber()
 {
-	return xr::pageNumber();
+    return xr::pageNumber();
 }
