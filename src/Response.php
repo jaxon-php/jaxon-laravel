@@ -18,6 +18,7 @@ class Response extends \Xajax\Response\Response
      * Wrap the Xajax response in a Laravel HTTP response.
      *
      * @param  string  $code
+     *
      * @return string  the HTTP response
      */
     public function http($code = '200')

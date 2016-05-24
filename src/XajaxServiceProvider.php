@@ -58,7 +58,7 @@ class XajaxServiceProvider extends ServiceProvider
 
             $xajax = \Xajax\Xajax::getInstance();
             // Use the Composer autoloader
-            $xajax->useComposerAutoLoader();
+            $xajax->useComposerAutoloader();
             // Xajax library default options
             $xajax->setOptions(array(
                 'js.app.export' => !config('app.debug', false),

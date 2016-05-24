@@ -2,8 +2,6 @@
 
 namespace Xajax\Laravel;
 
-use Xajax\Plugin\Manager as PluginManager;
-
 class Xajax
 {
     protected $xajax = null;
@@ -29,7 +27,7 @@ class Xajax
         $this->xajax = \Xajax\Xajax::getInstance();
         $this->validator = \Xajax\Utils\Container::getInstance()->getValidator();
         $this->response = new Response();
-        $this->view = new \Xajax\Laravel\View();
+        $this->view = new View();
     }
 
     /**
@@ -240,8 +238,8 @@ class Xajax
     public function processRequest()
     {
         // Process Xajax Request
-        $this->xajax->register(XAJAX_PROCESSING_EVENT, XAJAX_PROCESSING_EVENT_BEFORE, array($this, 'preProcess'));
-        $this->xajax->register(XAJAX_PROCESSING_EVENT, XAJAX_PROCESSING_EVENT_AFTER, array($this, 'postProcess'));
+        $this->xajax->register(\Xajax\Xajax::PROCESSING_EVENT, \Xajax\Xajax::PROCESSING_EVENT_BEFORE, array($this, 'preProcess'));
+        $this->xajax->register(\Xajax\Xajax::PROCESSING_EVENT, \Xajax\Xajax::PROCESSING_EVENT_AFTER, array($this, 'postProcess'));
         if($this->xajax->canProcessRequest())
         {
             // Traiter la requete

@@ -29,19 +29,6 @@ class Controller
     {}
 
     /**
-     * Make a request to a method of this controller
-     *
-     * @param string $method the name of the method
-     * @param ... $parameters the parameters of the method
-     * @return object the Laravel paginator instance
-     */
-    final public function call($method)
-    {
-        // This function is an alias to the request method of the Xajax Request Factory
-        return call_user_func_array(array($this, 'request'), func_get_args());
-    }
-
-    /**
      * Find an Xajax controller by name
      *
      * @param string $method the name of the method
