@@ -28,9 +28,6 @@ class XajaxServiceProvider extends ServiceProvider
         $this->publishes([
             $configSrcFile => $configDstFile,
         ]);
-        
-        // Define the helpers
-        require_once (__DIR__ . '/helpers.php');
     }
 
     /**
@@ -47,7 +44,7 @@ class XajaxServiceProvider extends ServiceProvider
             $requestRoute = config('xajax.app.route', 'xajax');
             $controllerDir = config('xajax.app.dir', app_path() . '/Xajax/Controllers');
             $namespace = config('xajax.app.namespace', '\\Xajax\\App');
-    
+
             $excluded = config('xajax.app.excluded', array());
             // The public methods of the Controller base class must not be exported to javascript
             $controllerClass = new \ReflectionClass('\\Xajax\\Laravel\\Controller');
