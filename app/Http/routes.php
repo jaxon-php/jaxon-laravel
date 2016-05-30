@@ -2,19 +2,12 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Route to Xajax request processor
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
+| All Xajax requests are sent through this route to the XajaxController class.
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-// Route to Xajax request processor
 Route::post(config('xajax.app.route', 'xajax'), array('as' => 'xajax', 'uses' => 'XajaxController@process'));
     
