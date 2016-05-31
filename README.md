@@ -1,5 +1,5 @@
-Xajax for Laravel
-=================================
+Xajax Library for Laravel
+=========================
 
 This package integrates the Xajax library into the Laravel 5 framework.
 
@@ -36,7 +36,7 @@ Add the following line to the `aliases` entry in the `app.php` config file.
 
 Copy the `app/Http/Controllers/XajaxController.php` file of this repo to the `app/Http/Controllers` dir of the Laravel application.
 
-Add the content of the `app/Http/route.php` file of this repo to the `routes.php` file of the Laravel application.
+Add the content of the `app/Http/routes.php` file of this repo to the `routes.php` file of the Laravel application.
 
 Configuration
 ------------
