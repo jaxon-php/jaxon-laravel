@@ -1,22 +1,22 @@
 {
-    "name": "lagdo/xajax-laravel",
+    "name": "lagdo/jaxon-laravel",
     "type": "library",
-    "description": "Xajax library integration for the Laravel framework",
+    "description": "Jaxon library integration for the Laravel framework",
     "authors": [
         {
             "name": "Thierry Feuzeu",
             "email": "thierry.feuzeu@lagdo-software.net"
         }
     ],
-    "keywords": ["Ajax", "Xajax", "PHP", "Laravel"],
+    "keywords": ["Ajax", "Jaxon", "PHP", "Laravel"],
     "license": "BSD-2-Clause",
     "require": {
-        "lagdo/xajax-core": "dev-master",
+        "lagdo/jaxon-core": "dev-master",
         "illuminate/support": "5.*"
     },
     "autoload": {
         "psr-4": {
-            "Xajax\\Laravel\\": "src/"
+            "Jaxon\\Laravel\\": "src/"
         }
     }
 }

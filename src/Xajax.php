@@ -1,10 +1,10 @@
 <?php
 
-namespace Xajax\Laravel;
+namespace Jaxon\Laravel;
 
-class Xajax
+class Jaxon
 {
-    protected $xajax = null;
+    protected $jaxon = null;
     protected $validator = null;
     protected $response = null;
     protected $view = null;
@@ -18,32 +18,32 @@ class Xajax
     private $method = null;
 
     /**
-     * Create a new Xajax instance.
+     * Create a new Jaxon instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->xajax = \Xajax\Xajax::getInstance();
-        $this->validator = \Xajax\Utils\Container::getInstance()->getValidator();
+        $this->jaxon = \Jaxon\Jaxon::getInstance();
+        $this->validator = \Jaxon\Utils\Container::getInstance()->getValidator();
         $this->response = new Response();
         $this->view = new View();
     }
 
     /**
-     * Check if the current request is an Xajax request.
+     * Check if the current request is an Jaxon request.
      *
-     * @return boolean  True if the request is Xajax, false otherwise.
+     * @return boolean  True if the request is Jaxon, false otherwise.
      */
     public function canProcessRequest()
     {
-        return $this->xajax->canProcessRequest();
+        return $this->jaxon->canProcessRequest();
     }
 
     /**
-     * Get the Xajax response.
+     * Get the Jaxon response.
      *
-     * @return object  the Xajax response
+     * @return object  the Jaxon response
      */
     public function response()
     {
@@ -51,23 +51,23 @@ class Xajax
     }
 
     /**
-     * Register the Xajax classes.
+     * Register the Jaxon classes.
      *
      * @return void
      */
     public function register()
     {
-        $this->xajax->registerClasses();
+        $this->jaxon->registerClasses();
     }
 
     /**
-     * Register a specified Xajax class.
+     * Register a specified Jaxon class.
      *
      * @return void
      */
     public function registerClass($sClassName)
     {
-        $this->xajax->registerClass($sClassName);
+        $this->jaxon->registerClass($sClassName);
     }
 
     /**
@@ -77,27 +77,27 @@ class Xajax
      */
     public function script($bIncludeJs = false, $bIncludeCss = false)
     {
-        return $this->xajax->getScript($bIncludeJs, $bIncludeCss);
+        return $this->jaxon->getScript($bIncludeJs, $bIncludeCss);
     }
 
     /**
-     * Get the HTML tags to include Xajax javascript files into the page.
+     * Get the HTML tags to include Jaxon javascript files into the page.
      *
      * @return string
      */
     public function js()
     {
-        return $this->xajax->getJs();
+        return $this->jaxon->getJs();
     }
 
     /**
-     * Get the HTML tags to include Xajax CSS code and files into the page.
+     * Get the HTML tags to include Jaxon CSS code and files into the page.
      *
      * @return string  the css code
      */
     public function css()
     {
-        return $this->xajax->getCss();
+        return $this->jaxon->getCss();
     }
 
     /**
@@ -168,7 +168,7 @@ class Xajax
      */
     public function controller($classname)
     {
-        $controller = $this->xajax->registerClass($classname, true);
+        $controller = $this->jaxon->registerClass($classname, true);
         if(!$controller)
         {
             return null;
@@ -178,10 +178,10 @@ class Xajax
     }
 
     /**
-     * This is the pre-request processing callback passed to the Xajax library.
+     * This is the pre-request processing callback passed to the Jaxon library.
      *
      * @param  boolean  &$bEndRequest if set to true, the request processing is interrupted.
-     * @return object  the Xajax response
+     * @return object  the Jaxon response
      */
     public function preProcess(&$bEndRequest)
     {
@@ -216,9 +216,9 @@ class Xajax
     }
 
     /**
-     * This is the post-request processing callback passed to the Xajax library.
+     * This is the post-request processing callback passed to the Jaxon library.
      *
-     * @return object  the Xajax response
+     * @return object  the Jaxon response
      */
     public function postProcess()
     {
@@ -231,19 +231,19 @@ class Xajax
     }
 
     /**
-     * Process the current Xajax request.
+     * Process the current Jaxon request.
      *
      * @return void
      */
     public function processRequest()
     {
-        // Process Xajax Request
-        $this->xajax->register(\Xajax\Xajax::PROCESSING_EVENT, \Xajax\Xajax::PROCESSING_EVENT_BEFORE, array($this, 'preProcess'));
-        $this->xajax->register(\Xajax\Xajax::PROCESSING_EVENT, \Xajax\Xajax::PROCESSING_EVENT_AFTER, array($this, 'postProcess'));
-        if($this->xajax->canProcessRequest())
+        // Process Jaxon Request
+        $this->jaxon->register(\Jaxon\Jaxon::PROCESSING_EVENT, \Jaxon\Jaxon::PROCESSING_EVENT_BEFORE, array($this, 'preProcess'));
+        $this->jaxon->register(\Jaxon\Jaxon::PROCESSING_EVENT, \Jaxon\Jaxon::PROCESSING_EVENT_AFTER, array($this, 'postProcess'));
+        if($this->jaxon->canProcessRequest())
         {
             // Traiter la requete
-            $this->xajax->processRequest();
+            $this->jaxon->processRequest();
         }
     }
 }

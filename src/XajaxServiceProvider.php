@@ -1,10 +1,10 @@
 <?php
 
-namespace Xajax\Laravel;
+namespace Jaxon\Laravel;
 
 use Illuminate\Support\ServiceProvider;
 
-class XajaxServiceProvider extends ServiceProvider
+class JaxonServiceProvider extends ServiceProvider
 {
 
     /**
@@ -23,7 +23,7 @@ class XajaxServiceProvider extends ServiceProvider
     {
         // Config source and destination files
         $configSrcFile = __DIR__ . '/../../config/config.php';
-        $configDstFile = config_path('xajax.php');
+        $configDstFile = config_path('jaxon.php');
         // Publish assets and config
         $this->publishes([
             $configSrcFile => $configDstFile,
@@ -37,43 +37,43 @@ class XajaxServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Register the Xajax singleton
-        $this->app->singleton('xajax', function ($app)
+        // Register the Jaxon singleton
+        $this->app->singleton('jaxon', function ($app)
         {
-            // Xajax application config
-            $requestRoute = config('xajax.app.route', 'xajax');
-            $controllerDir = config('xajax.app.dir', app_path('/Xajax/Controllers'));
-            $namespace = config('xajax.app.namespace', '\\Xajax\\App');
+            // Jaxon application config
+            $requestRoute = config('jaxon.app.route', 'jaxon');
+            $controllerDir = config('jaxon.app.dir', app_path('/Jaxon/Controllers'));
+            $namespace = config('jaxon.app.namespace', '\\Jaxon\\App');
 
-            $excluded = config('xajax.app.excluded', array());
+            $excluded = config('jaxon.app.excluded', array());
             // The public methods of the Controller base class must not be exported to javascript
-            $controllerClass = new \ReflectionClass('\\Xajax\\Laravel\\Controller');
+            $controllerClass = new \ReflectionClass('\\Jaxon\\Laravel\\Controller');
             foreach ($controllerClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $xMethod)
             {
                 $excluded[] = $xMethod->getShortName();
             }
 
-            $xajax = \Xajax\Xajax::getInstance();
+            $jaxon = \Jaxon\Jaxon::getInstance();
             // Use the Composer autoloader
-            $xajax->useComposerAutoloader();
-            // Xajax library default options
-            $xajax->setOptions(array(
+            $jaxon->useComposerAutoloader();
+            // Jaxon library default options
+            $jaxon->setOptions(array(
                 'js.app.export' => !config('app.debug', false),
                 'js.app.minify' => !config('app.debug', false),
-                'js.app.uri' => asset('/xajax/js'),
-                'js.app.dir' => public_path('/xajax/js'),
+                'js.app.uri' => asset('/jaxon/js'),
+                'js.app.dir' => public_path('/jaxon/js'),
             ));
-            // Xajax library user options
-            \Xajax\Config\Php::read(base_path('/config/xajax.php'), 'lib');
+            // Jaxon library user options
+            \Jaxon\Config\Php::read(base_path('/config/jaxon.php'), 'lib');
             // The request URI can be set with a Laravel route
-            if(!$xajax->hasOption('core.request.uri'))
+            if(!$jaxon->hasOption('core.request.uri'))
             {
-                $xajax->setOption('core.request.uri', url($requestRoute));
+                $jaxon->setOption('core.request.uri', url($requestRoute));
             }
-            // Register the default Xajax class directory
-            $xajax->addClassDir($controllerDir, $namespace, $excluded);
+            // Register the default Jaxon class directory
+            $jaxon->addClassDir($controllerDir, $namespace, $excluded);
 
-            return new Xajax();
+            return new Jaxon();
         });
     }
 
@@ -85,7 +85,7 @@ class XajaxServiceProvider extends ServiceProvider
     public function provides()
     {
         return array(
-            'xajax'
+            'jaxon'
         );
     }
 }

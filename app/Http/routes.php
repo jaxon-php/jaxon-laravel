@@ -2,12 +2,12 @@
 
 /*
 |--------------------------------------------------------------------------
-| Route to Xajax request processor
+| Route to Jaxon request processor
 |--------------------------------------------------------------------------
 |
-| All Xajax requests are sent through this route to the XajaxController class.
+| All Jaxon requests are sent through this route to the JaxonController class.
 |
 */
 
-Route::post(config('xajax.app.route', 'xajax'), array('as' => 'xajax', 'uses' => 'XajaxController@process'));
+Route::post(config('jaxon.app.route', 'jaxon'), array('as' => 'jaxon', 'uses' => 'JaxonController@process'));
     

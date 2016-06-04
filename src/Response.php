@@ -1,8 +1,8 @@
 <?php
 
-namespace Xajax\Laravel;
+namespace Jaxon\Laravel;
 
-class Response extends \Xajax\Response\Response
+class Response extends \Jaxon\Response\Response
 {
     /**
      * Create a new Response instance.
@@ -15,7 +15,7 @@ class Response extends \Xajax\Response\Response
     }
 
     /**
-     * Wrap the Xajax response in a Laravel HTTP response.
+     * Wrap the Jaxon response in a Laravel HTTP response.
      *
      * @param  string  $code
      *

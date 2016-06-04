@@ -1,6 +1,6 @@
 <?php
 
-namespace Xajax\Laravel;
+namespace Jaxon\Laravel;
 
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
@@ -33,7 +33,7 @@ class View
     }
 
     /**
-     * Set an Xajax presenter on a Laravel paginator
+     * Set an Jaxon presenter on a Laravel paginator
      *
      * @param object $paginator the Laravel paginator
      * @param integer $currentPage the current page

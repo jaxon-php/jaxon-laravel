@@ -1,10 +1,10 @@
 <?php
 
-namespace Xajax\Laravel\Facades;
+namespace Jaxon\Laravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Xajax extends Facade
+class Jaxon extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class Xajax extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'xajax';
+        return 'jaxon';
     }
 }

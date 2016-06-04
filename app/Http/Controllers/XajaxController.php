@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
-class XajaxController extends Controller
+class JaxonController extends Controller
 {
     public function __construct()
     {
@@ -13,10 +13,10 @@ class XajaxController extends Controller
 
     public function process()
     {
-        // Process Xajax request
-        if(\LaravelXajax::canProcessRequest())
+        // Process Jaxon request
+        if(\LaravelJaxon::canProcessRequest())
         {
-            \LaravelXajax::processRequest();
+            \LaravelJaxon::processRequest();
         }
     }
 }
