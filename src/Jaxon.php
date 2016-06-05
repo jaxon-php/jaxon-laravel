@@ -186,8 +186,8 @@ class Jaxon
     public function preProcess(&$bEndRequest)
     {
         // Validate the inputs
-        $class = $_POST['xjxcls'];
-        $method = $_POST['xjxmthd'];
+        $class = $_POST['jxncls'];
+        $method = $_POST['jxnmthd'];
         if(!$this->validator->validateClass($class) || !$this->validator->validateMethod($method))
         {
             // End the request processing if the input data are not valid.
