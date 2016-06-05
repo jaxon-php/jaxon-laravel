@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 
 class JaxonServiceProvider extends ServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -42,7 +41,7 @@ class JaxonServiceProvider extends ServiceProvider
         {
             // Jaxon application config
             $requestRoute = config('jaxon.app.route', 'jaxon');
-            $controllerDir = config('jaxon.app.dir', app_path('/Jaxon/Controllers'));
+            $controllerDir = config('jaxon.app.dir', app_path('Jaxon/Controllers'));
             $namespace = config('jaxon.app.namespace', '\\Jaxon\\App');
 
             $excluded = config('jaxon.app.excluded', array());
@@ -60,11 +59,11 @@ class JaxonServiceProvider extends ServiceProvider
             $jaxon->setOptions(array(
                 'js.app.export' => !config('app.debug', false),
                 'js.app.minify' => !config('app.debug', false),
-                'js.app.uri' => asset('/jaxon/js'),
-                'js.app.dir' => public_path('/jaxon/js'),
+                'js.app.uri' => asset('jaxon/js'),
+                'js.app.dir' => public_path('jaxon/js'),
             ));
             // Jaxon library user options
-            \Jaxon\Config\Php::read(base_path('/config/jaxon.php'), 'lib');
+            \Jaxon\Config\Php::read(base_path('config/jaxon.php'), 'lib');
             // The request URI can be set with a Laravel route
             if(!$jaxon->hasOption('core.request.uri'))
             {

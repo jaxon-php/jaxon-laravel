@@ -6,8 +6,8 @@ This package integrates the Jaxon library into the Laravel 5 framework.
 Features
 --------
 
-- Read Jaxon options from a file in Laravel config format.
 - Automatically register Jaxon classes from a preset directory.
+- Read Jaxon options from a file in Laravel config format.
 
 Installation
 ------------
@@ -49,7 +49,7 @@ The following options can be defined in the `app` section of the config file.
 | Name | Default value | Description |
 |------|---------------|-------------|
 | route | jaxon | The route to the Jaxon Controller, as defined in the routes.php file |
-| dir | app_path('/Jaxon/Controllers') | The directory of the Jaxon classes |
+| dir | app_path('Jaxon/Controllers') | The directory of the Jaxon classes |
 | namespace | \Jaxon\App | The namespace of the Jaxon classes |
 | excluded | empty array | Prevent Jaxon from exporting some methods |
 | | | |
