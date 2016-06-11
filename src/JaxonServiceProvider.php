@@ -46,7 +46,7 @@ class JaxonServiceProvider extends ServiceProvider
 
             $excluded = config('jaxon.app.excluded', array());
             // The public methods of the Controller base class must not be exported to javascript
-            $controllerClass = new \ReflectionClass('\\Jaxon\\Laravel\\Controller');
+            $controllerClass = new \ReflectionClass('\\Jaxon\\Framework\\Controller');
             foreach ($controllerClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $xMethod)
             {
                 $excluded[] = $xMethod->getShortName();
