@@ -11,6 +11,7 @@
     "keywords": ["Ajax", "Jaxon", "PHP", "Laravel"],
     "license": "BSD-2-Clause",
     "require": {
+        "lagdo/jaxon-core": "dev-master",
         "lagdo/jaxon-framework": "dev-master",
         "illuminate/support": "5.*"
     },

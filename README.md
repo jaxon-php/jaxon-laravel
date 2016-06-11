@@ -12,16 +12,13 @@ Features
 Installation
 ------------
 
-Add the following line in the `composer.json` file.
+Add the following lines in the `composer.json` file, and run the `composer update` command.
 ```json
 "require": {
+    "lagdo/jaxon-core": "dev-master",
+    "lagdo/jaxon-framework": "dev-master",
     "lagdo/jaxon-laravel": "dev-master"
 }
-```
-
-Or run the command
-```bash
-composer require lagdo/jaxon-laravel
 ```
 
 Add the following line to the `providers` entry in the `app.php` config file.
