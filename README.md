@@ -15,9 +15,9 @@ Installation
 Add the following lines in the `composer.json` file, and run the `composer update` command.
 ```json
 "require": {
-    "lagdo/jaxon-core": "dev-master",
-    "lagdo/jaxon-framework": "dev-master",
-    "lagdo/jaxon-laravel": "dev-master"
+    "jaxon-php/jaxon-core": "dev-master",
+    "jaxon-php/jaxon-framework": "dev-master",
+    "jaxon-php/jaxon-laravel": "dev-master"
 }
 ```
 
@@ -94,8 +94,8 @@ The `app.namespace` option must be explicitely set to `null`, `false` or an empt
 Contribute
 ----------
 
-- Issue Tracker: github.com/lagdo/jaxon-laravel/issues
-- Source Code: github.com/lagdo/jaxon-laravel
+- Issue Tracker: github.com/jaxon-php/jaxon-laravel/issues
+- Source Code: github.com/jaxon-php/jaxon-laravel
 
 License
 -------

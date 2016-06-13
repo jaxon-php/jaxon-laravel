@@ -1,5 +1,5 @@
 {
-    "name": "lagdo/jaxon-laravel",
+    "name": "jaxon-php/jaxon-laravel",
     "type": "library",
     "description": "Jaxon library integration for the Laravel framework",
     "authors": [
@@ -11,8 +11,8 @@
     "keywords": ["Ajax", "Jaxon", "PHP", "Laravel"],
     "license": "BSD-2-Clause",
     "require": {
-        "lagdo/jaxon-core": "dev-master",
-        "lagdo/jaxon-framework": "dev-master",
+        "jaxon-php/jaxon-core": "dev-master",
+        "jaxon-php/jaxon-framework": "dev-master",
         "illuminate/support": "5.*"
     },
     "autoload": {
