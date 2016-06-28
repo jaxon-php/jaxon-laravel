@@ -91,6 +91,8 @@ The Jaxon classes of the application must all be located in the directory indica
 If there is a namespace associated, the `app.namespace` option should be set accordingly.
 The `app.namespace` option must be explicitely set to `null`, `false` or an empty string if there is no namespace.
 
+By default, the Jaxon classes are located in the `app/Jaxon/Controllers` dir of the Laravel application, and the associated namespace is `\Jaxon\App`.
+
 Contribute
 ----------
 
