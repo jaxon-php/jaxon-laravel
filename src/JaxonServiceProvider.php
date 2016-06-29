@@ -46,7 +46,7 @@ class JaxonServiceProvider extends ServiceProvider
 
             $excluded = config('jaxon.app.excluded', array());
             // The public methods of the Controller base class must not be exported to javascript
-            $controllerClass = new \ReflectionClass('\\Jaxon\\Framework\\Controller');
+            $controllerClass = new \ReflectionClass('\\Jaxon\\Laravel\\Controller');
             foreach ($controllerClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $xMethod)
             {
                 $excluded[] = $xMethod->getShortName();
@@ -63,7 +63,7 @@ class JaxonServiceProvider extends ServiceProvider
                 'js.app.dir' => public_path('jaxon/js'),
             ));
             // Jaxon library user options
-            \Jaxon\Config\Php::read(base_path('config/jaxon.php'), 'lib');
+            $jaxon->readConfigFile(base_path('config/jaxon.php'), 'lib');
             // The request URI can be set with a Laravel route
             if(!$jaxon->hasOption('core.request.uri'))
             {
