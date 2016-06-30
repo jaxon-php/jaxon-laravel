@@ -57,7 +57,7 @@ class JaxonServiceProvider extends ServiceProvider
             $jaxon->useComposerAutoloader();
             // Jaxon library default options
             $jaxon->setOptions(array(
-                'js.app.export' => !config('app.debug', false),
+                'js.app.extern' => !config('app.debug', false),
                 'js.app.minify' => !config('app.debug', false),
                 'js.app.uri' => asset('jaxon/js'),
                 'js.app.dir' => public_path('jaxon/js'),
