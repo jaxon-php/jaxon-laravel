@@ -21,12 +21,17 @@ class JaxonServiceProvider extends ServiceProvider
     public function boot()
     {
         // Config source and destination files
-        $configSrcFile = __DIR__ . '/../../config/config.php';
+        $configSrcFile = __DIR__ . '/config/config.php';
         $configDstFile = config_path('jaxon.php');
         // Publish assets and config
         $this->publishes([
             $configSrcFile => $configDstFile,
-        ]);
+        ], 'config');
+        // Load package routes
+        if(!$this->app->routesAreCached())
+        {
+            require(__DIR__ . '/Http/routes.php');
+        }
     }
 
     /**
@@ -52,7 +57,7 @@ class JaxonServiceProvider extends ServiceProvider
                 $excluded[] = $xMethod->getShortName();
             }
 
-            $jaxon = \Jaxon\Jaxon::getInstance();
+            $jaxon = jaxon();
             // Use the Composer autoloader
             $jaxon->useComposerAutoloader();
             // Jaxon library default options

@@ -13,8 +13,7 @@ class Jaxon
      */
     public function __construct()
     {
-        $this->jaxon = \Jaxon\Jaxon::getInstance();
-        $this->validator = \Jaxon\Utils\Container::getInstance()->getValidator();
+        $this->jaxon = jaxon();
         $this->response = new Response();
         $this->view = new View();
     }

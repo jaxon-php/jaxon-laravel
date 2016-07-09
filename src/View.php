@@ -31,29 +31,4 @@ class View
     {
         return view()->make($template, $data);
     }
-
-    /**
-     * Set an Jaxon presenter on a Laravel paginator
-     *
-     * @param object $paginator the Laravel paginator
-     * @param integer $currentPage the current page
-     * @param string|object $controller the controller
-     * @param string $method the name of the method
-     * @param array $parameters the parameters of the method
-
-     * @return void
-     */
-    public static function setPresenter($paginator, $currentPage, $request)
-    {
-        // Append the page number to the parameter list, if not yet given.
-        if(!$request->hasPageNumber())
-        {
-            $request->addParameter(XAJAX_PAGE_NUMBER, 0);
-        }
-        // Set the Laravel paginator to use our presenter 
-        Paginator::presenter(function($paginator) use ($request, $currentPage)
-        {
-            return new Pagination\Presenter($paginator, $currentPage, $request);
-        });
-    }
 }
