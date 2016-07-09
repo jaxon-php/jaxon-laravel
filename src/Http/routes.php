@@ -9,5 +9,8 @@
 |
 */
 
-Route::post(config('jaxon.app.route', 'jaxon'), array('as' => 'jaxon', 'uses' => 'JaxonController@process'));
+Route::post(config('jaxon.app.route', 'jaxon'), array(
+    'as' => 'jaxon',
+    'uses' => '\Jaxon\Laravel\Http\Controllers\JaxonController@process'
+));
     

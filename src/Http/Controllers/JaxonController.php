@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Jaxon\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 

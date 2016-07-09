@@ -31,9 +31,12 @@ Add the following line to the `aliases` entry in the `app.php` config file.
 'LaravelJaxon' => Jaxon\Laravel\Facades\Jaxon::class
 ```
 
-Copy the `app/Http/Controllers/JaxonController.php` file of this repo to the `app/Http/Controllers` dir of the Laravel application.
+Publish the package configuration.
+```php
+php artisan vendor:publish --tag=config
+```
 
-Add the content of the `app/Http/routes.php` file of this repo to the `routes.php` file of the Laravel application.
+Edit the `config/jaxon.php` file to suit the needs of your application.
 
 Configuration
 ------------
