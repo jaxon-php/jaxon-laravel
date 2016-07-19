@@ -1,7 +1,7 @@
 Jaxon Library for Laravel
 =========================
 
-This package integrates the Jaxon library into the Laravel 5 framework.
+This package integrates the [Jaxon library](https://github.com/jaxon-php/jaxon-core) into the Laravel 5 framework.
 
 Features
 --------
@@ -15,8 +15,6 @@ Installation
 Add the following lines in the `composer.json` file, and run the `composer update` command.
 ```json
 "require": {
-    "jaxon-php/jaxon-core": "~1.0",
-    "jaxon-php/jaxon-framework": "~1.0",
     "jaxon-php/jaxon-laravel": "1.0.*"
 }
 ```
