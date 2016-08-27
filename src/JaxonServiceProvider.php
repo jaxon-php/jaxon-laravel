@@ -21,7 +21,7 @@ class JaxonServiceProvider extends ServiceProvider
     public function boot()
     {
         // Config source and destination files
-        $configSrcFile = __DIR__ . '/config/config.php';
+        $configSrcFile = __DIR__ . '/../config/config.php';
         $configDstFile = config_path('jaxon.php');
         // Publish assets and config
         $this->publishes([
