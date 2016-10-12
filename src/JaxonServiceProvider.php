@@ -72,7 +72,7 @@ class JaxonServiceProvider extends ServiceProvider
             // The request URI can be set with a Laravel route
             if(!$jaxon->hasOption('core.request.uri'))
             {
-                $jaxon->setOption('core.request.uri', url($requestRoute));
+                $jaxon->setOption('core.request.uri', route($requestRoute));
             }
             // Register the default Jaxon class directory
             $jaxon->addClassDir($controllerDir, $namespace, $excluded);
