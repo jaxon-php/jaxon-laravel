@@ -29,6 +29,6 @@ class View
      */
     public function render($template, array $data = array())
     {
-        return view()->make($template, $data);
+        return trim(view()->make($template, $data), "\n");
     }
 }
