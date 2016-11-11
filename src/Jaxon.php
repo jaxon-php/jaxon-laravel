@@ -27,13 +27,6 @@ class Jaxon
      */
     public function setup()
     {
-        // This function should be called only once
-        if(($this->setupCalled))
-        {
-            return;
-        }
-        $this->setupCalled = true;
-
         // Use the Composer autoloader
         $this->jaxon->useComposerAutoloader();
         // Jaxon library default options
