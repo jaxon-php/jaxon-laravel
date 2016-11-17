@@ -44,9 +44,7 @@ class JaxonServiceProvider extends ServiceProvider
         // Register the Jaxon singleton
         $this->app->singleton('jaxon', function ($app)
         {
-            $jaxon = new Jaxon();
-            $jaxon->setup();
-            return $jaxon;
+            return new Jaxon();
         });
     }
 

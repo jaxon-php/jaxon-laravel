@@ -4,19 +4,7 @@ namespace Jaxon\Laravel;
 
 class Jaxon
 {
-    use \Jaxon\Framework\JaxonTrait;
-
-    /**
-     * Create a new Jaxon instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->jaxon = jaxon();
-        $this->response = new Response();
-        $this->view = new View();
-    }
+    use \Jaxon\Framework\PluginTrait;
 
     /**
      * Initialise the Jaxon module.
@@ -27,8 +15,7 @@ class Jaxon
      */
     public function setup()
     {
-        // Use the Composer autoloader
-        $this->jaxon->useComposerAutoloader();
+        $this->view = new View();
         // Jaxon library default options
         $this->jaxon->setOptions(array(
             'js.app.extern' => !config('app.debug', false),
@@ -62,5 +49,23 @@ class Jaxon
         }
         // Register the default Jaxon class directory
         $this->jaxon->addClassDir($controllerDir, $namespace, $excluded);
+    }
+
+    /**
+     * Wrap the Jaxon response into an HTTP response.
+     *
+     * @param  $code        The HTTP Response code
+     *
+     * @return HTTP Response
+     */
+    public function httpResponse($code = '200')
+    {
+        // Send HTTP Headers
+        // $this->response->sendHeaders();
+        // Create and return a Laravel HTTP response
+        $httpResponse = \Response::make($this->response->getOutput(), $code);
+        $httpResponse->header('Content-Type', $this->response->getContentType() .
+            ';charset="' . $this->response->getCharacterEncoding() . '"');
+        return $httpResponse;
     }
 }
