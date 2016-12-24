@@ -4,7 +4,7 @@ namespace Jaxon\Laravel;
 
 class Jaxon
 {
-    use \Jaxon\Framework\PluginTrait;
+    use \Jaxon\Module\Traits\Module;
 
     /**
      * Initialise the Jaxon module.
@@ -52,6 +52,92 @@ class Jaxon
     }
 
     /**
+     * Set the module specific options for the Jaxon library.
+     *
+     * @return void
+     */
+    protected function setup()
+    {
+        // Load Jaxon config settings
+        $libConfig = config('jaxon.lib', array());
+        $appConfig = config('jaxon.app', array());
+
+        // Jaxon library settings
+        $jaxon = jaxon();
+        $jaxon->setOptions($libConfig);
+        // Default values
+        if(!$jaxon->hasOption('js.app.extern'))
+        {
+            $jaxon->setOption('js.app.extern', !config('app.debug', false));
+        }
+        if(!$jaxon->hasOption('js.app.minify'))
+        {
+            $jaxon->setOption('js.app.minify', !config('app.debug', false));
+        }
+        if(!$jaxon->hasOption('js.app.uri'))
+        {
+            $jaxon->setOption('js.app.uri', asset('jaxon/js'));
+        }
+        if(!$jaxon->hasOption('js.app.dir'))
+        {
+            $jaxon->setOption('js.app.dir', public_path('jaxon/js'));
+        }
+        // The request URI can be set with a Laravel route
+        if(!$jaxon->hasOption('core.request.uri'))
+        {
+            if(($route = config('jaxon.app.route', null)))
+            {
+                $this->jaxon->setOption('core.request.uri', route($route));
+            }
+        }
+
+        // Jaxon application settings
+        $this->appConfig = new \Jaxon\Utils\Config();
+        $this->appConfig->setOptions($appConfig);
+        // Default values
+        if(!$this->appConfig->hasOption('controllers.directory'))
+        {
+            $this->appConfig->setOption('controllers.directory', app_path('Jaxon/Controllers'));
+        }
+        if(!$this->appConfig->hasOption('controllers.namespace'))
+        {
+            $this->appConfig->setOption('controllers.namespace', '\\Jaxon\\App');
+        }
+        if(!$this->appConfig->hasOption('controllers.protected') || !is_array($this->appConfig->getOption('protected')))
+        {
+            $this->appConfig->setOption('controllers.protected', array());
+        }
+        // Jaxon controller class
+        $this->setControllerClass('\\Jaxon\\Laravel\\Controller');
+    }
+
+    /**
+     * Set the module specific options for the Jaxon library.
+     *
+     * This method needs to set at least the Jaxon request URI.
+     *
+     * @return void
+     */
+    protected function check()
+    {
+        // Todo: check the mandatory options
+    }
+
+    /**
+     * Return the view renderer.
+     *
+     * @return void
+     */
+    protected function view()
+    {
+        if($this->viewRenderer == null)
+        {
+            $this->viewRenderer = new View();
+        }
+        return $this->viewRenderer;
+    }
+
+    /**
      * Wrap the Jaxon response into an HTTP response.
      *
      * @param  $code        The HTTP Response code
@@ -60,8 +146,6 @@ class Jaxon
      */
     public function httpResponse($code = '200')
     {
-        // Send HTTP Headers
-        // $this->response->sendHeaders();
         // Create and return a Laravel HTTP response
         $httpResponse = \Response::make($this->response->getOutput(), $code);
         $httpResponse->header('Content-Type', $this->response->getContentType() .
