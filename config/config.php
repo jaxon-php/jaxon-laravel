@@ -2,10 +2,13 @@
 
 return array(
     'app' => array(
-        // 'route' => '',
-        // 'dir' => '',
-        // 'namespace' => '',
-        // 'excluded' => array(),
+        'controllers' => array(
+            // 'route' => 'jaxon',
+            // 'directory' => '',
+            // 'namespace' => '',
+            // 'separator' => '', // '.' or '_'
+            // 'protected' => array(),
+        ),
     ),
     'lib' => array(
         'core' => array(
