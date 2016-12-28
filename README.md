@@ -46,10 +46,11 @@ The following options can be defined in the `app` section of the config file.
 
 | Name | Default value | Description |
 |------|---------------|-------------|
-| route | jaxon | The route to the Jaxon Controller, as defined in the routes.php file |
-| dir | app_path('Jaxon/Controllers') | The directory of the Jaxon classes |
-| namespace | \Jaxon\App | The namespace of the Jaxon classes |
-| excluded | empty array | Prevent Jaxon from exporting some methods |
+| controllers.route | jaxon | The route to the Jaxon Controller, as defined in the routes.php file |
+| controllers.directory | app_path('Jaxon/Controllers') | The directory of the Jaxon classes |
+| controllers.namespace | \Jaxon\App  | The namespace of the Jaxon classes |
+| controllers.separator | .           | The separator in Jaxon class names |
+| controllers.protected | empty array | Prevent Jaxon from exporting some methods |
 | | | |
 
 The `route` option is overriden by the `core.request.uri` option of the Jaxon library.
@@ -88,9 +89,10 @@ Then it calls the `LaravelJaxon::css()`, `LaravelJaxon::js()` and `LaravelJaxon:
 
 ### The Jaxon classes
 
-The Jaxon classes of the application must all be located in the directory indicated by the `app.dir` option in the `jaxon.php` config file.
-If there is a namespace associated, the `app.namespace` option should be set accordingly.
-The `app.namespace` option must be explicitely set to `null`, `false` or an empty string if there is no namespace.
+The Jaxon classes must inherit from `\Jaxon\Laravel\Controller`.
+
+The Jaxon classes of the application must all be located in the directory indicated by the `app.controllers.directory` option in the `jaxon.php` config file.
+If there is a namespace associated, the `app.controllers.namespace` option should be set accordingly.
 
 By default, the Jaxon classes are located in the `app/Jaxon/Controllers` dir of the Laravel application, and the associated namespace is `\Jaxon\App`.
 
@@ -103,4 +105,4 @@ Contribute
 License
 -------
 
-The project is licensed under the BSD license.
+The package is licensed under the BSD license.
