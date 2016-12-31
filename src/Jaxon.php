@@ -20,15 +20,17 @@ class Jaxon
         // Jaxon library settings
         $jaxon = jaxon();
         $jaxon->setOptions($libConfig);
-        // The request URI can be set with a Laravel route
-        if(!$jaxon->hasOption('core.request.uri') && ($route = config('jaxon.app.route', null)))
-        {
-            $this->jaxon->setOption('core.request.uri', route($route));
-        }
 
         // Jaxon application settings
         $this->appConfig = new \Jaxon\Utils\Config();
         $this->appConfig->setOptions($appConfig);
+        // The request URI can be set with a names route
+        if(!$jaxon->hasOption('core.request.uri') &&
+            ($route = $this->appConfig->getOption('request.route', null)) &&
+            ($url = route($route)))
+        {
+            $jaxon->setOption('core.request.uri', $url);
+        }
 
         // Jaxon library default settings
         $isDebug = config('app.debug', false);
