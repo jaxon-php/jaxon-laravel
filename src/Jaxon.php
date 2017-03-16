@@ -41,6 +41,11 @@ class Jaxon
 
         // Jaxon controller class
         $this->setControllerClass('\\Jaxon\\Laravel\\Controller');
+
+        // Set the view
+        $this->setJaxonView(function(){
+            return new View();
+        });
     }
 
     /**
@@ -53,20 +58,6 @@ class Jaxon
     protected function jaxonCheck()
     {
         // Todo: check the mandatory options
-    }
-
-    /**
-     * Return the view renderer.
-     *
-     * @return void
-     */
-    protected function jaxonView()
-    {
-        if($this->jaxonViewRenderer == null)
-        {
-            $this->jaxonViewRenderer = new View();
-        }
-        return $this->jaxonViewRenderer;
     }
 
     /**
