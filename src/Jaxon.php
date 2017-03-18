@@ -42,9 +42,14 @@ class Jaxon
         // Jaxon controller class
         $this->setControllerClass('\\Jaxon\\Laravel\\Controller');
 
-        // Set the view
+        // Set the view renderer
         $this->setJaxonView(function(){
             return new View();
+        });
+
+        // Set the session
+        $this->setJaxonSession(function(){
+            return new Session();
         });
     }
 
