@@ -5,6 +5,32 @@ namespace Jaxon\Laravel;
 class Session
 {
     /**
+     * Get the current session id
+     * 
+     * @return string           The session id
+     */
+    public function getId()
+    {
+        return session()->getId();
+    }
+
+    /**
+     * Generate a new session id
+     * 
+     * @param bool          $bDeleteData         Whether to delete data from the previous session
+     * 
+     * @return void
+     */
+    public function newId($bDeleteData = false)
+    {
+        if($bDeleteData)
+        {
+            session()->flush();
+        }
+        session()->regenerate();
+    }
+
+    /**
      * Save data in the session
      *
      * @param string        $sKey                The session key
@@ -41,5 +67,37 @@ class Session
     public function get($sKey, $xDefault = null)
     {
         return session()->get($sKey, $xDefault);
+    }
+
+    /**
+     * Get all data in the session
+     * 
+     * @return array             An array of all data in the session
+     */
+    public function all()
+    {
+        return session()->all();
+    }
+
+    /**
+     * Delete a session key and its data
+     *
+     * @param string        $sKey                The session key
+     * 
+     * @return void
+     */
+    public function delete($sKey)
+    {
+        session()->forget($sKey);
+    }
+
+    /**
+     * Delete all data in the session
+     * 
+     * @return void
+     */
+    public function clear()
+    {
+        session()->flush();
     }
 }
