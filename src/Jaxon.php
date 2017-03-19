@@ -39,9 +39,6 @@ class Jaxon
         // Jaxon application default settings
         $this->setApplicationOptions(app_path('Jaxon/Controllers'), '\\Jaxon\\App');
 
-        // Jaxon controller class
-        $this->setControllerClass('\\Jaxon\\Laravel\\Controller');
-
         // Set the view renderer
         $this->setJaxonView(function(){
             return new View();
