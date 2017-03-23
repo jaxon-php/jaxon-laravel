@@ -89,12 +89,29 @@ Then it calls the `LaravelJaxon::css()`, `LaravelJaxon::js()` and `LaravelJaxon:
 
 ### The Jaxon classes
 
-The Jaxon classes must inherit from `\Jaxon\Laravel\Controller`.
+The Jaxon classes must inherit from `\Jaxon\Module\Controller`.
 
 The Jaxon classes of the application must all be located in the directory indicated by the `app.controllers.directory` option in the `jaxon.php` config file.
 If there is a namespace associated, the `app.controllers.namespace` option should be set accordingly.
 
 By default, the Jaxon classes are located in the `app/Jaxon/Controllers` dir of the Laravel application, and the associated namespace is `\Jaxon\App`.
+
+This is a simple example of a Jaxon class, defined in the `app/Jaxon/Controllers/HelloWorld.php` file.
+
+```php
+namespace Jaxon\App;
+
+class HelloWorld extends \Jaxon\Module\Controller
+{
+    public function sayHello()
+    {
+        $this->response->assign('div2', 'innerHTML', 'Hello World!');
+        return $this->response;
+    }
+}
+```
+
+Check the [jaxon-examples](https://github.com/jaxon-php/jaxon-examples/tree/master/frameworks/laravel) package for more examples.
 
 Contribute
 ----------
