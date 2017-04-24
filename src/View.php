@@ -2,11 +2,34 @@
 
 namespace Jaxon\Laravel;
 
-use Jaxon\Module\View\Store;
-use Jaxon\Module\View\Facade;
+use View as LaravelView;
 
-class View extends Facade
+use Jaxon\Module\View\Store;
+use Jaxon\Module\Interfaces\View as ViewRenderer;
+
+class View implements ViewRenderer
 {
+    /**
+     * Add a namespace to this view renderer
+     *
+     * @param string        $sNamespace         The namespace name
+     * @param string        $sDirectory         The namespace directory
+     * @param string        $sExtension         The extension to append to template names
+     *
+     * @return void
+     */
+    public function addNamespace($sNamespace, $sDirectory, $sExtension = '')
+    {
+        if(($sNamespace) && ($sDirectory))
+        {
+            LaravelView::addNamespace($sNamespace, $sDirectory);
+            if(($sExtension) && $sExtension != 'blade.php')
+            {
+                LaravelView::addExtension($sExtension, 'blade');
+            }
+        }
+    }
+
     /**
      * Render a view
      * 
@@ -17,6 +40,6 @@ class View extends Facade
     public function make(Store $store)
     {
         // Render the template
-        return trim(view($store->getViewPath(), $store->getViewData()), " \t\n");
+        return trim(view($store->getViewName(), $store->getViewData()), " \t\n");
     }
 }

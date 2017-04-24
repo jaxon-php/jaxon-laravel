@@ -39,13 +39,17 @@ class Jaxon
         // Jaxon application default settings
         $this->setApplicationOptions(app_path('Jaxon/Controllers'), '\\Jaxon\\App');
 
-        // Set the view renderer
-        $this->setJaxonView(function(){
+        // Set the default view namespace
+        $this->addViewNamespace('default', '', '', 'blade');
+        $this->appConfig->setOption('options.views.default', 'default');
+
+        // Add the view renderer
+        $this->addViewRenderer('blade', function(){
             return new View();
         });
 
-        // Set the session
-        $this->setJaxonSession(function(){
+        // Set the session manager
+        $this->setSessionManager(function(){
             return new Session();
         });
     }

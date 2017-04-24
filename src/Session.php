@@ -40,8 +40,8 @@ class Session
      */
     public function set($sKey, $xValue)
     {
-        session()->set($sKey, $xValue);
-        session()->save();
+        session()->put($sKey, $xValue);
+        // session()->save();
     }
 
     /**
