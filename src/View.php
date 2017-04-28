@@ -5,9 +5,9 @@ namespace Jaxon\Laravel;
 use View as LaravelView;
 
 use Jaxon\Module\View\Store;
-use Jaxon\Module\Interfaces\View as ViewRenderer;
+use Jaxon\Module\Interfaces\View as ViewInterface;
 
-class View implements ViewRenderer
+class View implements ViewInterface
 {
     /**
      * Add a namespace to this view renderer
@@ -37,7 +37,7 @@ class View implements ViewRenderer
      * 
      * @return string        The string representation of the view
      */
-    public function make(Store $store)
+    public function render(Store $store)
     {
         // Render the template
         return trim(view($store->getViewName(), $store->getViewData()), " \t\n");
