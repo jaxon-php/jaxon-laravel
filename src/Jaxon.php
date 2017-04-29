@@ -36,9 +36,6 @@ class Jaxon
         $isDebug = config('app.debug', false);
         $this->setLibraryOptions(!$isDebug, !$isDebug, asset('jaxon/js'), public_path('jaxon/js'));
 
-        // Jaxon application default settings
-        $this->setApplicationOptions(app_path('Jaxon/Controllers'), '\\Jaxon\\App');
-
         // Set the default view namespace
         $this->addViewNamespace('default', '', '', 'blade');
         $this->appConfig->setOption('options.views.default', 'default');

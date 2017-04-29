@@ -6,10 +6,12 @@ return array(
             // 'route' => 'jaxon',
         ),
         'controllers' => array(
-            // 'directory' => '',
-            // 'namespace' => '',
-            // 'separator' => '', // '.' or '_'
-            // 'protected' => array(),
+            array(
+                'directory' => app_path('Jaxon/Controllers'),
+                'namespace' => '\\Jaxon\\App',
+                // 'separator' => '', // '.' or '_'
+                // 'protected' => array(),
+            ),
         ),
     ),
     'lib' => array(
@@ -36,7 +38,6 @@ return array(
                 // 'dir' => '',
                 // 'extern' => true,
                 // 'minify' => true,
-                'options' => '',
             ),
         ),
     ),
