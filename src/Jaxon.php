@@ -4,7 +4,7 @@ namespace Jaxon\Laravel;
 
 class Jaxon
 {
-    use \Jaxon\Module\Traits\Module;
+    use \Jaxon\Sentry\Traits\Armada;
 
     /**
      * Set the module specific options for the Jaxon library.
@@ -19,6 +19,7 @@ class Jaxon
 
         // Jaxon library settings
         $jaxon = jaxon();
+        $sentry = jaxon()->sentry();
         $jaxon->setOptions($libConfig);
 
         // Jaxon application settings
@@ -34,19 +35,19 @@ class Jaxon
 
         // Jaxon library default settings
         $isDebug = config('app.debug', false);
-        $this->setLibraryOptions(!$isDebug, !$isDebug, asset('jaxon/js'), public_path('jaxon/js'));
+        $sentry->setLibraryOptions(!$isDebug, !$isDebug, asset('jaxon/js'), public_path('jaxon/js'));
 
         // Set the default view namespace
-        $this->addViewNamespace('default', '', '', 'blade');
+        $sentry->addViewNamespace('default', '', '', 'blade');
         $this->appConfig->setOption('options.views.default', 'default');
 
         // Add the view renderer
-        $this->addViewRenderer('blade', function(){
+        $sentry->addViewRenderer('blade', function(){
             return new View();
         });
 
         // Set the session manager
-        $this->setSessionManager(function(){
+        $sentry->setSessionManager(function(){
             return new Session();
         });
     }

@@ -5,9 +5,9 @@ return array(
         'request' => array(
             // 'route' => 'jaxon',
         ),
-        'controllers' => array(
+        'classes' => array(
             array(
-                'directory' => app_path('Jaxon/Controllers'),
+                'directory' => app_path('Jaxon/Classes'),
                 'namespace' => '\\Jaxon\\App',
                 // 'separator' => '', // '.' or '_'
                 // 'protected' => array(),
