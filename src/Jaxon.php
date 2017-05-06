@@ -74,9 +74,9 @@ class Jaxon
     public function httpResponse($code = '200')
     {
         // Create and return a Laravel HTTP response
-        $httpResponse = \Response::make($this->jaxonResponse->getOutput(), $code);
-        $httpResponse->header('Content-Type', $this->jaxonResponse->getContentType() .
-            ';charset="' . $this->jaxonResponse->getCharacterEncoding() . '"');
+        $httpResponse = \Response::make($this->ajaxResponse()->getOutput(), $code);
+        $httpResponse->header('Content-Type', $this->ajaxResponse()->getContentType() .
+            ';charset="' . $this->ajaxResponse()->getCharacterEncoding() . '"');
         return $httpResponse;
     }
 }
