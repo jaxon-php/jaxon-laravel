@@ -9,7 +9,7 @@
         }
     ],
     "keywords": ["Ajax", "Jaxon", "PHP", "Laravel"],
-    "license": "BSD-2-Clause",
+    "license": "BSD-3-Clause",
     "require": {
         "jaxon-php/jaxon-sentry": "~2.0",
         "illuminate/support": "5.*"
