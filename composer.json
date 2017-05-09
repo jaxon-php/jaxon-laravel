@@ -14,6 +14,9 @@
         "jaxon-php/jaxon-sentry": "~2.0",
         "illuminate/support": "5.*"
     },
+    "provide": {
+        "jaxon-php/jaxon-view-blade": "~2.0"
+    },
     "autoload": {
         "psr-4": {
             "Jaxon\\Laravel\\": "src/"
