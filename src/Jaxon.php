@@ -19,11 +19,11 @@ class Jaxon
 
         // Jaxon library settings
         $jaxon = jaxon();
-        $sentry = jaxon()->sentry();
+        $sentry = $jaxon->sentry();
         $jaxon->setOptions($libConfig);
 
         // Jaxon application settings
-        $this->appConfig = new \Jaxon\Utils\Config();
+        $this->appConfig = $jaxon->newConfig();
         $this->appConfig->setOptions($appConfig);
         // The request URI can be set with a names route
         if(!$jaxon->hasOption('core.request.uri') &&
