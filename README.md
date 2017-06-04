@@ -98,7 +98,7 @@ Then it calls the `LaravelJaxon::css()`, `LaravelJaxon::js()` and `LaravelJaxon:
 
 ### The Jaxon classes
 
-The Jaxon classes must inherit from `\Jaxon\Sentry\Classes\Base`.
+The Jaxon classes must inherit from `\Jaxon\Sentry\Classes\Armada`.
 By default, they are located in the `app/Jaxon/Classes` dir of the Laravel application, and the associated namespace is `\Jaxon\App`.
 
 This is a simple example of a Jaxon class, defined in the `app/Jaxon/Classes/HelloWorld.php` file.
@@ -106,7 +106,7 @@ This is a simple example of a Jaxon class, defined in the `app/Jaxon/Classes/Hel
 ```php
 namespace Jaxon\App;
 
-class HelloWorld extends \Jaxon\Sentry\Classes\Base
+class HelloWorld extends \Jaxon\Sentry\Classes\Armada
 {
     public function sayHello()
     {
