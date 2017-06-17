@@ -19,6 +19,7 @@ class JaxonController extends Controller
         if(LaravelJaxon::canProcessRequest())
         {
             LaravelJaxon::processRequest();
+            return LaravelJaxon::httpResponse();
         }
     }
 }

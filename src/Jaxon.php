@@ -21,6 +21,8 @@ class Jaxon
         $jaxon = jaxon();
         $sentry = $jaxon->sentry();
         $jaxon->setOptions($libConfig);
+        // Do not call exit after processing the request, so Laravel can terminate properly.
+        $jaxon->setOption('core.process.exit', false);
 
         // Jaxon application settings
         $this->appConfig = $jaxon->newConfig();
