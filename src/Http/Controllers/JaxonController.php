@@ -3,21 +3,22 @@
 namespace Jaxon\Laravel\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use LaravelJaxon;
 
 class JaxonController extends Controller
 {
-    public function __construct()
-    {
-        // parent::__construct();
-    }
-
+    /**
+     * Process the Jaxon request
+     * 
+     * @return void
+     */
     public function process()
     {
-        session()->start();
-        // Process Jaxon request
-        if(\LaravelJaxon::canProcessRequest())
+        // session()->start();
+        // Process the Jaxon request
+        if(LaravelJaxon::canProcessRequest())
         {
-            \LaravelJaxon::processRequest();
+            LaravelJaxon::processRequest();
         }
     }
 }
