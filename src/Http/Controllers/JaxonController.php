@@ -14,7 +14,6 @@ class JaxonController extends Controller
      */
     public function process()
     {
-        // session()->start();
         // Process the Jaxon request
         if(LaravelJaxon::canProcessRequest())
         {

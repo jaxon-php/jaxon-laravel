@@ -40,8 +40,7 @@ class Session
      */
     public function set($sKey, $xValue)
     {
-        session()->put($sKey, $xValue);
-        // session()->save();
+        session()->set($sKey, $xValue);
     }
 
     /**
@@ -66,7 +65,7 @@ class Session
      */
     public function get($sKey, $xDefault = null)
     {
-        return session()->get($sKey, $xDefault);
+        return session($sKey, $xDefault);
     }
 
     /**
