@@ -9,7 +9,7 @@ class JaxonController extends Controller
 {
     /**
      * Process the Jaxon request
-     * 
+     *
      * @return void
      */
     public function process()
