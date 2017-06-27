@@ -44,12 +44,12 @@ class Jaxon
         $this->appConfig->setOption('options.views.default', 'default');
 
         // Add the view renderer
-        $sentry->addViewRenderer('blade', function(){
+        $sentry->addViewRenderer('blade', function () {
             return new View();
         });
 
         // Set the session manager
-        $sentry->setSessionManager(function(){
+        $sentry->setSessionManager(function () {
             return new Session();
         });
     }
