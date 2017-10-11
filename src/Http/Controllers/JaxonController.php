@@ -14,9 +14,9 @@ class JaxonController extends Controller
 
     /**
      * The constructor.
-     * 
+     *
      * The parameter is automatically populated by Laravel, thanks to its service container.
-     * 
+     *
      * @param Jaxon             $jaxon                  The Laravel Jaxon plugin
      */
     public function __construct(Jaxon $jaxon)
@@ -26,7 +26,7 @@ class JaxonController extends Controller
 
     /**
      * Callback for initializing a Jaxon class instance.
-     * 
+     *
      * This function is called anytime a Jaxon class is instanciated.
      *
      * @param object            $instance               The Jaxon class instance
@@ -64,22 +64,22 @@ class JaxonController extends Controller
 
     /**
      * Process a Jaxon request.
-     * 
+     *
      * The parameter is automatically populated by Laravel, thanks to its service container.
-     * 
+     *
      * @param Jaxon             $this->jaxon                  The Laravel Jaxon plugin
      *
      * @return The HTTP response to send back to the browser
      */
     public function process()
     {
-        $this->jaxon->onInit(function($instance){
+        $this->jaxon->onInit(function ($instance) {
             $this->initInstance($instance);
         });
-        $this->jaxon->onBefore(function($instance, $method, &$bEndRequest){
+        $this->jaxon->onBefore(function ($instance, $method, &$bEndRequest) {
             $this->beforeRequest($instance, $method, $bEndRequest);
         });
-        $this->jaxon->onAfter(function($instance, $method){
+        $this->jaxon->onAfter(function ($instance, $method) {
             $this->afterRequest($instance, $method);
         });
 
