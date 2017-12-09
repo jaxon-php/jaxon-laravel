@@ -6,6 +6,12 @@ class Jaxon
 {
     use \Jaxon\Sentry\Traits\Armada;
 
+    public function __construct()
+    {
+        // Initialize the Jaxon plugin
+        $this->_jaxonSetup();
+    }
+
     /**
      * Set the module specific options for the Jaxon library.
      *
