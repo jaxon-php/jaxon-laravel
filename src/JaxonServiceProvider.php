@@ -35,11 +35,12 @@ class JaxonServiceProvider extends ServiceProvider
     public function register()
     {
         // Register the Jaxon singleton
-        $this->app->alias('jaxon', Jaxon::class);
         $this->app->resolving(Jaxon::class, function (Jaxon $jaxon)
         {
             $jaxon->init();
         });
         $this->app->singleton(Jaxon::class, Jaxon::class);
+        // Define the alias
+        $this->app->alias(Jaxon::class, 'jaxon');
     }
 }
