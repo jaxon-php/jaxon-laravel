@@ -7,13 +7,6 @@ use Illuminate\Support\ServiceProvider;
 class JaxonServiceProvider extends ServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = false;
-
-    /**
      * Bootstrap the application events.
      *
      * @return void
@@ -42,21 +35,11 @@ class JaxonServiceProvider extends ServiceProvider
     public function register()
     {
         // Register the Jaxon singleton
-        $this->app->singleton('jaxon', function ($app)
+        $this->app->alias('jaxon', Jaxon::class);
+        $this->app->resolving(Jaxon::class, function (Jaxon $jaxon)
         {
-            return new Jaxon();
+            $jaxon->init();
         });
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return array(
-            'jaxon'
-        );
+        $this->app->singleton(Jaxon::class, Jaxon::class);
     }
 }

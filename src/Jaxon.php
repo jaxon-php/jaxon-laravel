@@ -6,7 +6,7 @@ class Jaxon
 {
     use \Jaxon\Sentry\Traits\Armada;
 
-    public function __construct()
+    public function init()
     {
         // Initialize the Jaxon plugin
         $this->_jaxonSetup();
@@ -58,6 +58,9 @@ class Jaxon
         $sentry->setSessionManager(function () {
             return new Session();
         });
+
+        // Set the dependency injection bridge
+        $jaxon->di()->setSentryContainer(new Container());
     }
 
     /**
