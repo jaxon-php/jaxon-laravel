@@ -11,7 +11,7 @@
     "keywords": ["Ajax", "Jaxon", "PHP", "Laravel"],
     "license": "BSD-3-Clause",
     "require": {
-        "jaxon-php/jaxon-sentry": "~3.0",
+        "jaxon-php/jaxon-core": "dev-develop",
         "illuminate/support": "5.*"
     },
     "provide": {

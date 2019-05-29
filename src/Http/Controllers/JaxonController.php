@@ -86,6 +86,10 @@ class JaxonController extends Controller
         // Process the Jaxon request
         if($this->jaxon->canProcessRequest())
         {
+            // Do not send any response after processing the request.
+            // Laravel will take care of it.
+            jaxon()->setOption('core.response.send', false);
+
             $this->jaxon->processRequest();
             return $this->jaxon->httpResponse();
         }

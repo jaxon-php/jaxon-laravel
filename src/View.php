@@ -4,10 +4,10 @@ namespace Jaxon\Laravel;
 
 use View as LaravelView;
 
-use Jaxon\Sentry\View\Store;
-use Jaxon\Sentry\Interfaces\View as ViewInterface;
+use Jaxon\App\View\Store;
+use Jaxon\App\Contracts\View as ViewContract;
 
-class View implements ViewInterface
+class View implements ViewContract
 {
     /**
      * Add a namespace to this view renderer
