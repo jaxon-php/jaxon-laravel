@@ -15,26 +15,11 @@ class JaxonController extends Controller
     /**
      * The constructor.
      *
-     * The parameter is automatically populated by Laravel, thanks to its service container.
-     *
      * @param Jaxon             $jaxon                  The Laravel Jaxon plugin
      */
     public function __construct(Jaxon $jaxon)
     {
         $this->jaxon = $jaxon;
-    }
-
-    /**
-     * Callback for initializing a Jaxon class instance.
-     *
-     * This function is called anytime a Jaxon class is instanciated.
-     *
-     * @param object            $instance               The Jaxon class instance
-     *
-     * @return void
-     */
-    public function initInstance($instance)
-    {
     }
 
     /**
@@ -73,23 +58,16 @@ class JaxonController extends Controller
      */
     public function process()
     {
-        $this->jaxon->onInit(function ($instance) {
-            $this->initInstance($instance);
-        });
-        $this->jaxon->onBefore(function ($instance, $method, &$bEndRequest) {
+        $this->jaxon->callback()->before(function ($instance, $method, &$bEndRequest) {
             $this->beforeRequest($instance, $method, $bEndRequest);
         });
-        $this->jaxon->onAfter(function ($instance, $method) {
+        $this->jaxon->callback()->after(function ($instance, $method) {
             $this->afterRequest($instance, $method);
         });
 
         // Process the Jaxon request
         if($this->jaxon->canProcessRequest())
         {
-            // Do not send any response after processing the request.
-            // Laravel will take care of it.
-            jaxon()->setOption('core.response.send', false);
-
             $this->jaxon->processRequest();
             return $this->jaxon->httpResponse();
         }

@@ -2,7 +2,9 @@
 
 namespace Jaxon\Laravel;
 
-class Session
+use Jaxon\Contracts\Session as SessionContract;
+
+class Session implements SessionContract
 {
     /**
      * Get the current session id

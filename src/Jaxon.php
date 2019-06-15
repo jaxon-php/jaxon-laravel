@@ -4,7 +4,7 @@ namespace Jaxon\Laravel;
 
 class Jaxon
 {
-    use \Jaxon\App\Features\App;
+    use \Jaxon\Features\App;
 
     public function setup()
     {
@@ -45,7 +45,7 @@ class Jaxon
             ->app($aAppOptions)
             // ->uri($sUri)
             ->js(!$bIsDebug, asset('jaxon/js'), public_path('jaxon/js'), !$bIsDebug)
-            ->bootstrap();
+            ->bootstrap(false);
     }
 
     /**

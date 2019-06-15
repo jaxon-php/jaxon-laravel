@@ -4,8 +4,8 @@ namespace Jaxon\Laravel;
 
 use View as LaravelView;
 
-use Jaxon\App\View\Store;
-use Jaxon\App\Contracts\View as ViewContract;
+use Jaxon\Ui\View\Store;
+use Jaxon\Contracts\View as ViewContract;
 
 class View implements ViewContract
 {
