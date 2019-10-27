@@ -1,44 +1,44 @@
 <?php
 
-return array(
-    'app' => array(
-        'request' => array(
+return [
+    'app' => [
+        'request' => [
             // 'route' => 'jaxon',
-        ),
-        'classes' => array(
-            array(
+        ],
+        'classes' => [
+            [
                 'directory' => app_path('Jaxon/Classes'),
                 'namespace' => '\\Jaxon\\App',
                 // 'separator' => '', // '.' or '_'
-                // 'protected' => array(),
-            ),
-        ),
-    ),
-    'lib' => array(
-        'core' => array(
+                // 'protected' => [],
+            ],
+        ],
+    ],
+    'lib' => [
+        'core' => [
             'language' => 'en',
             'encoding' => 'UTF-8',
-            'prefix' => array(
+            'prefix' => [
                 'class' => '',
-            ),
-            'debug' => array(
+            ],
+            'debug' => [
                 'on' => false,
                 'verbose' => false,
-            ),
-            'error' => array(
+            ],
+            'error' => [
                 'handle' => false,
-            ),
-        ),
-        'js' => array(
-            'lib' => array(
+            ],
+        ],
+        'js' => [
+            'lib' => [
                 // 'uri' => '',
-            ),
-            'app' => array(
+            ],
+            'app' => [
                 // 'uri' => '',
                 // 'dir' => '',
-                // 'extern' => true,
+                // 'export' => true,
                 // 'minify' => true,
-            ),
-        ),
-    ),
-);
+            ],
+        ],
+    ],
+];
