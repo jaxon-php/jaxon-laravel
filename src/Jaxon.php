@@ -40,12 +40,12 @@ class Jaxon
         // Set the framework di container wrapper
         $di->setAppContainer(new Container());
 
-        $this->jaxon()
+        $this->bootstrap()
             ->lib($aLibOptions)
             ->app($aAppOptions)
             // ->uri($sUri)
             ->js(!$bIsDebug, asset('jaxon/js'), public_path('jaxon/js'), !$bIsDebug)
-            ->bootstrap(false);
+            ->run(false);
     }
 
     /**
