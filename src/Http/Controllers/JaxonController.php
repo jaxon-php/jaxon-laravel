@@ -23,31 +23,6 @@ class JaxonController extends Controller
     }
 
     /**
-     * Callback before processing a Jaxon request.
-     *
-     * @param object            $instance               The Jaxon class instance to call
-     * @param string            $method                 The Jaxon class method to call
-     * @param boolean           $bEndRequest            Whether to end the request or not
-     *
-     * @return void
-     */
-    public function beforeRequest($instance, $method, &$bEndRequest)
-    {
-    }
-
-    /**
-     * Callback after processing a Jaxon request.
-     *
-     * @param object            $instance               The Jaxon class instance called
-     * @param string            $method                 The Jaxon class method called
-     *
-     * @return void
-     */
-    public function afterRequest($instance, $method)
-    {
-    }
-
-    /**
      * Process a Jaxon request.
      *
      * The parameter is automatically populated by Laravel, thanks to its service container.
@@ -58,11 +33,32 @@ class JaxonController extends Controller
      */
     public function process()
     {
-        $this->jaxon->callback()->before(function ($instance, $method, &$bEndRequest) {
-            $this->beforeRequest($instance, $method, $bEndRequest);
+        $this->jaxon->callback()->before(function ($target, &$bEndRequest) {
+            /*
+            if($target->isFunction())
+            {
+                $function = $target->getFunctionName();
+            }
+            elseif($target->isClass())
+            {
+                $class = $target->getClassName();
+                $method = $target->getMethodName();
+                // $instance = $this->jaxon->instance($class);
+            }
+            */
         });
-        $this->jaxon->callback()->after(function ($instance, $method) {
-            $this->afterRequest($instance, $method);
+        $this->jaxon->callback()->after(function ($target, $bEndRequest) {
+            /*
+            if($target->isFunction())
+            {
+                $function = $target->getFunctionName();
+            }
+            elseif($target->isClass())
+            {
+                $class = $target->getClassName();
+                $method = $target->getMethodName();
+            }
+            */
         });
 
         // Process the Jaxon request
