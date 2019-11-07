@@ -5,9 +5,8 @@ return [
         'request' => [
             // 'route' => 'jaxon',
         ],
-        'classes' => [
-            [
-                'directory' => app_path('Jaxon/Classes'),
+        'directories' => [
+            app_path('Jaxon/Classes') => [
                 'namespace' => '\\Jaxon\\App',
                 // 'separator' => '', // '.' or '_'
                 // 'protected' => [],
