@@ -21,7 +21,7 @@ class Jaxon
         if(!config('jaxon.lib.core.request.uri') &&
             ($route = config('jaxon.app.request.route', null)))
         {
-            $this->jaxon()->uri(route($route));
+            $this->bootstrap()->uri(route($route));
         }
 
         $viewManager = $di->getViewmanager();
