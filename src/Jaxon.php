@@ -45,7 +45,7 @@ class Jaxon
             ->app($aAppOptions)
             // ->uri($sUri)
             ->js(!$bIsDebug, asset('jaxon/js'), public_path('jaxon/js'), !$bIsDebug)
-            ->run(false);
+            ->run();
 
         // Prevent the Jaxon library from sending the response or exiting
         $jaxon->setOption('core.response.send', false);
