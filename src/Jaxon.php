@@ -4,90 +4,72 @@ namespace Jaxon\Laravel;
 
 class Jaxon
 {
-    use \Jaxon\Sentry\Traits\Armada;
+    use \Jaxon\Features\App;
 
-    public function init()
-    {
-        // Initialize the Jaxon plugin
-        $this->_jaxonSetup();
-    }
-
-    /**
-     * Set the module specific options for the Jaxon library.
-     *
-     * @return void
-     */
-    protected function jaxonSetup()
+    public function setup()
     {
         // Load Jaxon config settings
-        $libConfig = config('jaxon.lib', array());
-        $appConfig = config('jaxon.app', array());
+        $aLibOptions = config('jaxon.lib', []);
+        $aAppOptions = config('jaxon.app', []);
+        $bIsDebug = config('app.debug', false);
 
         // Jaxon library settings
         $jaxon = jaxon();
-        $sentry = $jaxon->sentry();
-        $jaxon->setOptions($libConfig);
-        // Do not call exit after processing the request, so Laravel can terminate properly.
-        $jaxon->setOption('core.process.exit', false);
+        $di = $jaxon->di();
 
-        // Jaxon application settings
-        $this->appConfig = $jaxon->newConfig();
-        $this->appConfig->setOptions($appConfig);
-        // The request URI can be set with a names route
-        if(!$jaxon->hasOption('core.request.uri') &&
-            ($route = $this->appConfig->getOption('request.route', null)) &&
-            ($url = route($route)))
+        // The request URI can be set with a named route
+        if(!config('jaxon.lib.core.request.uri') &&
+            ($route = config('jaxon.app.request.route', null)))
         {
-            $jaxon->setOption('core.request.uri', $url);
+            $this->bootstrap()->uri(route($route));
         }
 
-        // Jaxon library default settings
-        $isDebug = config('app.debug', false);
-        $sentry->setLibraryOptions(!$isDebug, !$isDebug, asset('jaxon/js'), public_path('jaxon/js'));
-
+        $viewManager = $di->getViewmanager();
         // Set the default view namespace
-        $sentry->addViewNamespace('default', '', '', 'blade');
-        $this->appConfig->setOption('options.views.default', 'default');
-
+        $viewManager->addNamespace('default', '', '', 'blade');
         // Add the view renderer
-        $sentry->addViewRenderer('blade', function () {
+        $viewManager->addRenderer('blade', function () {
             return new View();
         });
 
         // Set the session manager
-        $sentry->setSessionManager(function () {
+        $di->setSessionManager(function () {
             return new Session();
         });
 
-        // Set the dependency injection bridge
-        $jaxon->di()->setSentryContainer(new Container());
+        // Set the framework di container wrapper
+        $di->setAppContainer(new Container());
+
+        $this->bootstrap()
+            ->lib($aLibOptions)
+            ->app($aAppOptions)
+            // ->uri($sUri)
+            ->js(!$bIsDebug, asset('jaxon/js'), public_path('jaxon/js'), !$bIsDebug)
+            ->run();
+
+        // Prevent the Jaxon library from sending the response or exiting
+        $jaxon->setOption('core.response.send', false);
+        $jaxon->setOption('core.process.exit', false);
     }
 
     /**
-     * Set the module specific options for the Jaxon library.
+     * Process an incoming Jaxon request, and return the response.
      *
-     * This method needs to set at least the Jaxon request URI.
-     *
-     * @return void
+     * @return mixed
      */
-    protected function jaxonCheck()
+    public function processRequest()
     {
-        // Todo: check the mandatory options
-    }
+        $jaxon = jaxon();
+        // Process the jaxon request
+        $jaxon->processRequest();
+        // Get the reponse to the request
+        $jaxonResponse = $jaxon->di()->getResponseManager()->getResponse();
 
-    /**
-     * Wrap the Jaxon response into an HTTP response.
-     *
-     * @param  $code        The HTTP Response code
-     *
-     * @return HTTP Response
-     */
-    public function httpResponse($code = '200')
-    {
         // Create and return a Laravel HTTP response
-        $httpResponse = \Response::make($this->ajaxResponse()->getOutput(), $code);
-        $httpResponse->header('Content-Type', $this->ajaxResponse()->getContentType() .
-            ';charset="' . $this->ajaxResponse()->getCharacterEncoding() . '"');
+        $code = '200';
+        $httpResponse = response($jaxonResponse->getOutput(), $code);
+        $httpResponse->header('Content-Type', $jaxonResponse->getContentType() .
+            ';charset="' . $jaxonResponse->getCharacterEncoding() . '"');
         return $httpResponse;
     }
 }
