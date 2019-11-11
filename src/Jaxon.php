@@ -46,21 +46,30 @@ class Jaxon
             // ->uri($sUri)
             ->js(!$bIsDebug, asset('jaxon/js'), public_path('jaxon/js'), !$bIsDebug)
             ->run(false);
+
+        // Prevent the Jaxon library from sending the response or exiting
+        $jaxon->setOption('core.response.send', false);
+        $jaxon->setOption('core.process.exit', false);
     }
 
     /**
-     * Wrap the Jaxon response into an HTTP response.
+     * Process an incoming Jaxon request, and return the response.
      *
-     * @param  $code        The HTTP Response code
-     *
-     * @return HTTP Response
+     * @return mixed
      */
-    public function httpResponse($code = '200')
+    public function processRequest()
     {
+        $jaxon = jaxon();
+        // Process the jaxon request
+        $jaxon->processRequest();
+        // Get the reponse to the request
+        $jaxonResponse = $jaxon->di()->getResponseManager()->getResponse();
+
         // Create and return a Laravel HTTP response
-        $httpResponse = response($this->ajaxResponse()->getOutput(), $code);
-        $httpResponse->header('Content-Type', $this->ajaxResponse()->getContentType() .
-            ';charset="' . $this->ajaxResponse()->getCharacterEncoding() . '"');
+        $code = '200';
+        $httpResponse = response($jaxonResponse->getOutput(), $code);
+        $httpResponse->header('Content-Type', $jaxonResponse->getContentType() .
+            ';charset="' . $jaxonResponse->getCharacterEncoding() . '"');
         return $httpResponse;
     }
 }
