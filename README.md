@@ -46,16 +46,15 @@ The following options can be defined in the `app` section of the config file.
 
 | Name | Description |
 |------|---------------|
-| classes | An array of directory containing Jaxon application classes |
+| directories | An array of directory containing Jaxon application classes |
 | views   | An array of directory containing Jaxon application views |
 | | | |
 
 By default, the `views` array is empty. Views are rendered from the framework default location.
-There's a single entry in the `classes` array with the following values.
+There's a single entry in the `directories` array with the following values.
 
 | Name | Default value | Description |
 |------|---------------|-------------|
-| request.route | jaxon | The named route to the Jaxon request processor |
 | directory | app_path('Jaxon/Classes') | The directory of the Jaxon classes |
 | namespace | \Jaxon\App  | The namespace of the Jaxon classes |
 | separator | .           | The separator in Jaxon class names |
