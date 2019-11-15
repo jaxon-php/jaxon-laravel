@@ -24,7 +24,7 @@ class Jaxon
             $this->bootstrap()->uri(route($route));
         }
 
-        $viewManager = $di->getViewmanager();
+        $viewManager = $di->getViewManager();
         // Set the default view namespace
         $viewManager->addNamespace('default', '', '', 'blade');
         // Add the view renderer
@@ -37,7 +37,7 @@ class Jaxon
             return new Session();
         });
 
-        // Set the framework di container wrapper
+        // Set the framework service container wrapper
         $di->setAppContainer(new Container());
 
         $this->bootstrap()
@@ -53,6 +53,29 @@ class Jaxon
     }
 
     /**
+     * Get the HTTP response
+     *
+     * @param string    $code       The HTTP response code
+     *
+     * @return mixed
+     */
+    public function httpResponse($code = '200')
+    {
+        // Get the reponse to the request
+        $jaxonResponse = $jaxon->di()->getResponseManager()->getResponse();
+        if(!$jaxonResponse)
+        {
+            $jaxonResponse = jaxon()->getResponse();
+        }
+
+        // Create and return a Laravel HTTP response
+        $httpResponse = response($jaxonResponse->getOutput(), $code);
+        $httpResponse->header('Content-Type', $jaxonResponse->getContentType() .
+            ';charset="' . $jaxonResponse->getCharacterEncoding() . '"');
+        return $httpResponse;
+    }
+
+    /**
      * Process an incoming Jaxon request, and return the response.
      *
      * @return mixed
@@ -62,14 +85,8 @@ class Jaxon
         $jaxon = jaxon();
         // Process the jaxon request
         $jaxon->processRequest();
-        // Get the reponse to the request
-        $jaxonResponse = $jaxon->di()->getResponseManager()->getResponse();
 
-        // Create and return a Laravel HTTP response
-        $code = '200';
-        $httpResponse = response($jaxonResponse->getOutput(), $code);
-        $httpResponse->header('Content-Type', $jaxonResponse->getContentType() .
-            ';charset="' . $jaxonResponse->getCharacterEncoding() . '"');
-        return $httpResponse;
+        // Return the reponse to the request
+        return $this->httpResponse();
     }
 }
