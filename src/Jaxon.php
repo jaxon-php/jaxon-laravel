@@ -2,6 +2,8 @@
 
 namespace Jaxon\Laravel;
 
+use Illuminate\Support\Facades\Log;
+
 class Jaxon
 {
     use \Jaxon\Features\App;
@@ -39,6 +41,9 @@ class Jaxon
 
         // Set the framework service container wrapper
         $di->setAppContainer(new Container());
+
+        // Set the logger
+        $this->setLogger(Log::getMonolog());
 
         $this->bootstrap()
             ->lib($aLibOptions)
