@@ -12,7 +12,7 @@
     "license": "BSD-3-Clause",
     "require": {
         "jaxon-php/jaxon-core": "^3.1",
-        "illuminate/support": "5.*"
+        "illuminate/support": "6.*"
     },
     "provide": {
         "jaxon-php/jaxon-view-blade": "~3.0"
