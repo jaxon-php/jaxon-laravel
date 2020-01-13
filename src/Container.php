@@ -12,9 +12,9 @@
 
 namespace Jaxon\Laravel;
 
-use Jaxon\Contracts\Container as ContainerContract;
+use Psr\Container\ContainerInterface;
 
-class Container implements ContainerContract
+class Container implements ContainerInterface
 {
     /**
      * Check if a given class is defined in the container
