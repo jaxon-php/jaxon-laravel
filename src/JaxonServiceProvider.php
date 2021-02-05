@@ -23,7 +23,7 @@ class JaxonServiceProvider extends ServiceProvider
         // Load package routes
         if(!$this->app->routesAreCached())
         {
-            require(__DIR__ . '/Http/routes.php');
+            require(__DIR__ . '/../routes/web.php');
         }
     }
 
