@@ -6,7 +6,7 @@ return [
             // 'route' => 'jaxon',
         ],
         'directories' => [
-            app_path('Jaxon/Classes') => [
+            app_path('Jaxon/App') => [
                 'namespace' => '\\Jaxon\\App',
                 // 'separator' => '', // '.' or '_'
                 // 'protected' => [],
