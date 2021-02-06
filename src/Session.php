@@ -42,7 +42,7 @@ class Session implements SessionContract
      */
     public function set($sKey, $xValue)
     {
-        session()->set($sKey, $xValue);
+        session([$sKey => $xValue]);
     }
 
     /**
@@ -54,7 +54,7 @@ class Session implements SessionContract
      */
     public function has($sKey)
     {
-        return session()->has($sKey);
+        return session()->exists($sKey);
     }
 
     /**
