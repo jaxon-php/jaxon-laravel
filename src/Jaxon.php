@@ -43,7 +43,7 @@ class Jaxon
         $di->setAppContainer(new Container());
 
         // Set the logger
-        $this->setLogger(Log::getMonolog());
+        $this->setLogger(Log::getLogger());
 
         $this->bootstrap()
             ->lib($aLibOptions)
