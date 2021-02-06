@@ -21,7 +21,7 @@ class Jaxon
 
         // The request URI can be set with a named route
         if(!config('jaxon.lib.core.request.uri') &&
-            ($route = config('jaxon.app.request.route', null)))
+            ($route = config('jaxon.app.request.route', 'jaxon')))
         {
             $this->bootstrap()->uri(route($route));
         }
