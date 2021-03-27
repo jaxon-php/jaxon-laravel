@@ -19,7 +19,7 @@ Add the following lines in the `composer.json` file, and run the `composer updat
 }
 ```
 
-Add the following line to the `providers` entry in the `app.php` config file.
+If you have installed a version prior to `3.2`, add the following line to the `providers` entry in the `app.php` config file.
 ```php
 Jaxon\Laravel\JaxonServiceProvider::class
 ```
