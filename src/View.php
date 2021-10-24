@@ -2,7 +2,7 @@
 
 namespace Jaxon\Laravel;
 
-use View as LaravelView;
+use Illuminate\Support\Facades\View as LaravelView;
 
 use Jaxon\Utils\View\Store;
 use Jaxon\Contracts\View as ViewContract;
