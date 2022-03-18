@@ -72,7 +72,7 @@ class Jaxon
         // Create and return a Laravel HTTP response
         $httpResponse = response($jaxonResponse->getOutput(), $sCode);
         $httpResponse->header('Content-Type', $jaxonResponse->getContentType() .
-            ';charset="' . $this->jaxon->getCharacterEncoding() . '"');
+            ';charset="' . $this->getCharacterEncoding() . '"');
         return $httpResponse;
     }
 }
