@@ -4,6 +4,8 @@ namespace Jaxon\Laravel;
 
 use Illuminate\Support\ServiceProvider;
 
+use function config_path;
+
 class JaxonServiceProvider extends ServiceProvider
 {
     /**

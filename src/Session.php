@@ -4,6 +4,8 @@ namespace Jaxon\Laravel;
 
 use Jaxon\Contracts\Session as SessionContract;
 
+use function session;
+
 class Session implements SessionContract
 {
     /**

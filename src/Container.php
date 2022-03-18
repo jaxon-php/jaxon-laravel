@@ -14,6 +14,8 @@ namespace Jaxon\Laravel;
 
 use Psr\Container\ContainerInterface;
 
+use function app;
+
 class Container implements ContainerInterface
 {
     /**

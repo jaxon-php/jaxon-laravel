@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\View as LaravelView;
 use Jaxon\Utils\View\Store;
 use Jaxon\Contracts\View as ViewContract;
 
+use function trim;
+use function view;
+
 class View implements ViewContract
 {
     /**
