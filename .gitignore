@@ -1,3 +1,7 @@
-# Do not commit Eclipse files
 .project
 .settings/*
+vendor/
+composer.lock
+.idea
+/build/
+.phpunit.result.cache

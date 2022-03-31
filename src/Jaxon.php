@@ -2,6 +2,7 @@
 
 namespace Jaxon\Laravel;
 
+use Jaxon\App\AppTrait;
 use Illuminate\Support\Facades\Log;
 
 use function config;
@@ -13,7 +14,7 @@ use function jaxon;
 
 class Jaxon
 {
-    use \Jaxon\App\AppTrait;
+    use AppTrait;
 
     /**
      * The constructor
