@@ -46,7 +46,7 @@ class Jaxon
         if(!config('jaxon.lib.core.request.uri') &&
             ($route = config('jaxon.app.request.route', 'jaxon')))
         {
-            $this->bootstrap()->uri(route($route));
+            $this->uri(route($route));
         }
 
         // Load Jaxon config settings
@@ -57,8 +57,7 @@ class Jaxon
         $this->bootstrap()
             ->lib($aLibOptions)
             ->app($aAppOptions)
-            // ->uri($sUri)
-            ->js(!$bIsDebug, asset('jaxon/js'), public_path('jaxon/js'), !$bIsDebug)
+            ->asset(!$bIsDebug, !$bIsDebug, asset('jaxon/js'), public_path('jaxon/js'))
             ->setup();
     }
 
@@ -72,8 +71,7 @@ class Jaxon
 
         // Create and return a Laravel HTTP response
         $httpResponse = response($jaxonResponse->getOutput(), $sCode);
-        $httpResponse->header('Content-Type', $jaxonResponse->getContentType() .
-            ';charset="' . $this->getCharacterEncoding() . '"');
+        $httpResponse->header('Content-Type', $this->getContentType());
         return $httpResponse;
     }
 }
