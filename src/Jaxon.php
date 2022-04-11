@@ -38,7 +38,7 @@ class Jaxon
             return new Session();
         });
         // Set the framework service container wrapper
-        $this->setAppContainer(new Container());
+        $this->setContainer(new Container());
         // Set the logger
         $this->setLogger(Log::getLogger());
 
