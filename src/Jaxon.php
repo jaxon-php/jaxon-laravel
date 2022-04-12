@@ -67,10 +67,10 @@ class Jaxon
     public function httpResponse(string $sCode = '200')
     {
         // Get the reponse to the request
-        $jaxonResponse = $this->jaxon->getResponse();
+        $ajaxResponse = $this->ajaxResponse();
 
         // Create and return a Laravel HTTP response
-        $httpResponse = response($jaxonResponse->getOutput(), $sCode);
+        $httpResponse = response($ajaxResponse->getOutput(), $sCode);
         $httpResponse->header('Content-Type', $this->getContentType());
         return $httpResponse;
     }
