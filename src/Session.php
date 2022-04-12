@@ -13,7 +13,7 @@ class Session implements SessionInterface
      *
      * @return string           The session id
      */
-    public function getId()
+    public function getId(): string
     {
         return session()->getId();
     }
@@ -54,7 +54,7 @@ class Session implements SessionInterface
      *
      * @return bool             True if the session key exists, else false
      */
-    public function has($sKey)
+    public function has($sKey): bool
     {
         return session()->exists($sKey);
     }
@@ -77,7 +77,7 @@ class Session implements SessionInterface
      *
      * @return array             An array of all data in the session
      */
-    public function all()
+    public function all(): array
     {
         return session()->all();
     }
