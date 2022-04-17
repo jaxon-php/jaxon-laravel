@@ -3,7 +3,7 @@
 return [
     'app' => [
         'request' => [
-            // 'route' => 'jaxon',
+            'route' => 'jaxon',
         ],
         'directories' => [
             app_path('Jaxon/App') => [

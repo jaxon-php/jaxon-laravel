@@ -1,13 +1,8 @@
 Jaxon Library for Laravel
 =========================
 
-This package integrates the [Jaxon library](https://github.com/jaxon-php/jaxon-core) into the Laravel 5 framework.
-
-Features
---------
-
-- Automatically register Jaxon classes from a preset directory.
-- Read Jaxon options from a file in Laravel config format.
+This package integrates the [Jaxon library](https://github.com/jaxon-php/jaxon-core) into the Laravel framework.
+It works with Laravel version 6 or newer.
 
 Installation
 ------------
@@ -15,13 +10,8 @@ Installation
 Add the following lines in the `composer.json` file, and run the `composer update` command.
 ```json
 "require": {
-    "jaxon-php/jaxon-laravel": "^3.2"
+    "jaxon-php/jaxon-laravel": "^4.0"
 }
-```
-
-If you have installed a version prior to `3.2`, add the following line to the `providers` entry in the `app.php` config file.
-```php
-Jaxon\Laravel\JaxonServiceProvider::class
 ```
 
 Publish the package configuration.
@@ -29,12 +19,34 @@ Publish the package configuration.
 php artisan vendor:publish --tag=config
 ```
 
-Edit the `config/jaxon.php` file to suit the needs of your application.
+Routing and middleware
+----------------------
+
+Register the Jaxon middleware for Laravel.
+
+```php
+    protected $routeMiddleware = [
+        ...
+        // Jaxon middleware
+        'jaxon.ajax' => \Jaxon\Laravel\Middleware\AjaxMiddleware::class,
+    ];
+```
+
+Add the `jaxon.ajax` middleware to the route which processes Jaxon requests. Set the route name to `jaxon`.
+
+The Jaxon middleware returns the response, so it must be added at the end of the middleware list.
+Also, the code in this route is not supposed to be executed, unless Jaxon fails to process the request.
+
+```php
+Route::get('/jaxon', function () {
+    return response()->json({}); // This is not supposed to be executed.
+})->middleware(['web', 'jaxon.ajax'])->name('jaxon');
+```
 
 Configuration
-------------
+-------------
 
-The settings in the jaxon.php config file are separated into two sections.
+The settings in the `jaxon.php` config file are separated into two sections.
 The options in the `lib` section are those of the Jaxon core library, while the options in the `app` sections are those of the Laravel application.
 
 The following options can be defined in the `app` section of the config file.

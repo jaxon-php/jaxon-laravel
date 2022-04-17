@@ -3,6 +3,7 @@
 namespace Jaxon\Laravel;
 
 use Jaxon\App\AppTrait;
+use Jaxon\Exception\SetupException;
 use Illuminate\Support\Facades\Log;
 
 use function config;
@@ -17,13 +18,11 @@ class Jaxon
     use AppTrait;
 
     /**
-     * The constructor
+     * Load the config and setup the library.
+     *
+     * @return void
+     * @throws SetupException
      */
-    public function __construct()
-    {
-        $this->jaxon = jaxon();
-    }
-
     public function setup()
     {
         // Set the default view namespace

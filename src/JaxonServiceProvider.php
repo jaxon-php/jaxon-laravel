@@ -22,11 +22,6 @@ class JaxonServiceProvider extends ServiceProvider
         $this->publishes([
             $configSrcFile => $configDstFile,
         ], 'config');
-        // Load package routes
-        if(!$this->app->routesAreCached())
-        {
-            require(__DIR__ . '/../routes/web.php');
-        }
     }
 
     /**
@@ -42,7 +37,5 @@ class JaxonServiceProvider extends ServiceProvider
             $jaxon->setup();
             return $jaxon;
         });
-        // Define the alias
-        $this->app->alias(Jaxon::class, 'jaxon');
     }
 }
