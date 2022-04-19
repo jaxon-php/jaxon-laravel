@@ -2,6 +2,7 @@
 
 namespace Jaxon\Laravel;
 
+use Jaxon\App\AppInterface;
 use Jaxon\App\AppTrait;
 use Jaxon\Exception\SetupException;
 use Illuminate\Support\Facades\Log;
@@ -13,17 +14,23 @@ use function public_path;
 use function response;
 use function jaxon;
 
-class Jaxon
+class Jaxon implements AppInterface
 {
     use AppTrait;
 
     /**
-     * Load the config and setup the library.
-     *
-     * @return void
+     * The class constructor
+     */
+    public function __construct()
+    {
+        $this->initApp(jaxon()->di());
+    }
+
+    /**
+     * @inheritDoc
      * @throws SetupException
      */
-    public function setup()
+    public function setup(string $sConfigFile)
     {
         // Set the default view namespace
         $this->addViewNamespace('default', '', '', 'blade');
@@ -31,7 +38,6 @@ class Jaxon
         $this->addViewRenderer('blade', function () {
             return new View();
         });
-
         // Set the session manager
         $this->setSessionManager(function () {
             return new Session();
@@ -42,8 +48,7 @@ class Jaxon
         $this->setLogger(Log::getLogger());
 
         // The request URI can be set with a named route
-        if(!config('jaxon.lib.core.request.uri') &&
-            ($route = config('jaxon.app.request.route', 'jaxon')))
+        if(!config('jaxon.lib.core.request.uri') && ($route = config('jaxon.app.request.route', 'jaxon')))
         {
             $this->uri(route($route));
         }
@@ -51,12 +56,12 @@ class Jaxon
         // Load Jaxon config settings
         $aLibOptions = config('jaxon.lib', []);
         $aAppOptions = config('jaxon.app', []);
-        $bIsDebug = config('app.debug', false);
+        $bExport = $bMinify = !config('app.debug', false);
 
         $this->bootstrap()
             ->lib($aLibOptions)
             ->app($aAppOptions)
-            ->asset(!$bIsDebug, !$bIsDebug, asset('jaxon/js'), public_path('jaxon/js'))
+            ->asset($bExport, $bMinify, asset('jaxon/js'), public_path('jaxon/js'))
             ->setup();
     }
 
@@ -65,12 +70,10 @@ class Jaxon
      */
     public function httpResponse(string $sCode = '200')
     {
-        // Get the reponse to the request
-        $ajaxResponse = $this->ajaxResponse();
-
         // Create and return a Laravel HTTP response
-        $httpResponse = response($ajaxResponse->getOutput(), $sCode);
+        $httpResponse = response($this->ajaxResponse()->getOutput(), $sCode);
         $httpResponse->header('Content-Type', $this->getContentType());
+
         return $httpResponse;
     }
 }
