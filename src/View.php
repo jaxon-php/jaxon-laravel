@@ -3,14 +3,13 @@
 namespace Jaxon\Laravel;
 
 use Illuminate\Support\Facades\View as LaravelView;
-
-use Jaxon\Utils\View\Store;
-use Jaxon\Contracts\View as ViewContract;
+use Jaxon\App\View\Store;
+use Jaxon\App\View\ViewInterface;
 
 use function trim;
 use function view;
 
-class View implements ViewContract
+class View implements ViewInterface
 {
     /**
      * Add a namespace to this view renderer
@@ -21,12 +20,12 @@ class View implements ViewContract
      *
      * @return void
      */
-    public function addNamespace($sNamespace, $sDirectory, $sExtension = '')
+    public function addNamespace(string $sNamespace, string $sDirectory, string $sExtension = '')
     {
         if(($sNamespace) && ($sDirectory))
         {
             LaravelView::addNamespace($sNamespace, $sDirectory);
-            if(($sExtension) && $sExtension != 'blade.php')
+            if(($sExtension) && $sExtension !== 'blade.php')
             {
                 LaravelView::addExtension($sExtension, 'blade');
             }
@@ -40,7 +39,7 @@ class View implements ViewContract
      *
      * @return string        The string representation of the view
      */
-    public function render(Store $store)
+    public function render(Store $store): string
     {
         // Render the template
         return trim(view($store->getViewName(), $store->getViewData()), " \t\n");

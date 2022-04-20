@@ -32,10 +32,8 @@ class Jaxon implements AppInterface
      */
     public function setup(string $sConfigFile)
     {
-        // Set the default view namespace
-        $this->addViewNamespace('default', '', '', 'blade');
         // Add the view renderer
-        $this->addViewRenderer('blade', function () {
+        $this->addViewRenderer('blade', '', function () {
             return new View();
         });
         // Set the session manager
