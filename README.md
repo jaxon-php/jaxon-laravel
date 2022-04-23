@@ -38,7 +38,7 @@ The Jaxon middleware returns the response, so it must be added at the end of the
 Also, the code in this route is not supposed to be executed, unless Jaxon fails to process the request.
 
 ```php
-Route::get('/jaxon', function () {
+Route::post('/jaxon', function () {
     return response()->json({}); // This is not supposed to be executed.
 })->middleware(['web', 'jaxon.ajax'])->name('jaxon');
 ```
