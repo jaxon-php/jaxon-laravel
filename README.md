@@ -1,5 +1,5 @@
-Jaxon Library for Laravel
-=========================
+Jaxon integration for Laravel
+=============================
 
 This package integrates the [Jaxon library](https://github.com/jaxon-php/jaxon-core) into the Laravel framework.
 It works with Laravel version 6 or newer.
@@ -22,7 +22,7 @@ php artisan vendor:publish --tag=config
 Routing and middleware
 ----------------------
 
-Register the Jaxon middleware for Laravel.
+Register the Jaxon middleware for Laravel in the `app/Http/Kernel.php` file.
 
 ```php
     protected $routeMiddleware = [
