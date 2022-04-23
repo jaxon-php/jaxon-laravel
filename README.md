@@ -39,7 +39,7 @@ Also, the code in this route is not supposed to be executed, unless Jaxon fails 
 
 ```php
 Route::post('/jaxon', function () {
-    return response()->json({}); // This is not supposed to be executed.
+    return response()->json([]); // This is not supposed to be executed.
 })->middleware(['web', 'jaxon.ajax'])->name('jaxon');
 ```
 
