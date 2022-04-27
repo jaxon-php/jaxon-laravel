@@ -6,8 +6,8 @@ return [
             'route' => 'jaxon',
         ],
         'directories' => [
-            app_path('Jaxon/App') => [
-                'namespace' => '\\Jaxon\\App',
+            base_path('jaxon/ajax') => [
+                'namespace' => '\\Jaxon\\Ajax',
                 // 'separator' => '', // '.' or '_'
                 // 'protected' => [],
             ],
