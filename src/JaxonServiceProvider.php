@@ -7,7 +7,7 @@ use Jaxon\App\AppInterface;
 use Jaxon\Exception\SetupException;
 
 use function config_path;
-use function jaxon;
+use function Jaxon\jaxon;
 
 class JaxonServiceProvider extends ServiceProvider
 {

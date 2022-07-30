@@ -12,7 +12,7 @@ use function route;
 use function asset;
 use function public_path;
 use function response;
-use function jaxon;
+use function Jaxon\jaxon;
 
 class Jaxon implements AppInterface
 {
