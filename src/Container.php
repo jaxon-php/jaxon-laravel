@@ -25,7 +25,7 @@ class Container implements ContainerInterface
      *
      * @return bool
      */
-    public function has($sClass)
+    public function has(string $sClass): bool
     {
         return app()->bound($sClass);
     }
@@ -37,7 +37,7 @@ class Container implements ContainerInterface
      *
      * @return mixed                The class instance
      */
-    public function get($sClass)
+    public function get(string $sClass)
     {
         return app()->make($sClass);
     }
