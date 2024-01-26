@@ -22,7 +22,19 @@ php artisan vendor:publish --tag=config
 Routing and middleware
 ----------------------
 
-Register the Jaxon middleware for Laravel in the `app/Http/Kernel.php` file.
+Starting from version `4.1.0`, the library automatically registers the middleware.
+It can be configured to also register its route by adding the `route` and `middlewares` options in the `config/jaxon.php` file.
+
+```php
+    'app' => [
+        'request' => [
+            'route' => 'jaxon',
+            'middlewares' => ['web', 'jaxon.ajax'],
+        ],
+    ],
+```
+
+Register the Jaxon middleware for Laravel in the `app/Http/Kernel.php` file (only for versions prior to `4.1.0`).
 
 ```php
     protected $routeMiddleware = [
