@@ -4,13 +4,14 @@ return [
     'app' => [
         'request' => [
             'route' => 'jaxon',
+            'middlewares' => ['web', 'jaxon.ajax'],
         ],
         'directories' => [
-            base_path('jaxon/ajax') => [
-                'namespace' => '\\Jaxon\\Ajax',
-                // 'separator' => '', // '.' or '_'
-                // 'protected' => [],
-            ],
+            // base_path('jaxon/ajax') => [
+            //     'namespace' => '\\Jaxon\\Ajax',
+            //     // 'separator' => '', // '.' or '_'
+            //     // 'protected' => [],
+            // ],
         ],
     ],
     'lib' => [
