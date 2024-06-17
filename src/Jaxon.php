@@ -2,8 +2,7 @@
 
 namespace Jaxon\Laravel;
 
-use Jaxon\App\AppInterface;
-use Jaxon\App\Traits\AppTrait;
+use Jaxon\App\AbstractApp;
 use Jaxon\Exception\SetupException;
 use Illuminate\Support\Facades\Log;
 
@@ -12,20 +11,9 @@ use function route;
 use function asset;
 use function public_path;
 use function response;
-use function Jaxon\jaxon;
 
-class Jaxon implements AppInterface
+class Jaxon extends AbstractApp
 {
-    use AppTrait;
-
-    /**
-     * The class constructor
-     */
-    public function __construct()
-    {
-        $this->initApp(jaxon()->di());
-    }
-
     /**
      * @inheritDoc
      * @throws SetupException
