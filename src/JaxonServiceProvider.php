@@ -49,6 +49,11 @@ class JaxonServiceProvider extends ServiceProvider
         $router->post($jaxonRoute, function () {
             return response()->json([]); // This is not supposed to be executed.
         })->middleware($jaxonMiddlewares)->name('jaxon');
+
+        // Register the Jaxon application
+        jaxon()->di()->set(AppInterface::class, function() {
+            return $this->app->make(Jaxon::class);
+        });
     }
 
     /**
@@ -60,14 +65,10 @@ class JaxonServiceProvider extends ServiceProvider
     public function register()
     {
         // Register the Jaxon singleton
-        jaxon()->di()->set(AppInterface::class, function() {
+        $this->app->singleton(Jaxon::class, function() {
             $jaxon = new Jaxon();
             $jaxon->setup('');
             return $jaxon;
-        });
-        // Register the Jaxon singleton
-        $this->app->singleton(Jaxon::class, function() {
-            return jaxon()->app();
         });
     }
 }
