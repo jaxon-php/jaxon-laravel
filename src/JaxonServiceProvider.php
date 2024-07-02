@@ -36,14 +36,17 @@ class JaxonServiceProvider extends ServiceProvider
     public function boot()
     {
         // Directives for Jaxon custom attributes
-        Blade::directive('jxnFunc', function ($expression) {
-            return '<?php echo \Jaxon\attr()->func(' . $this->expr($expression) . '); ?>';
+        Blade::directive('jxnHtml', function ($expression) {
+            return '<?php echo \Jaxon\attr()->html(' . $this->expr($expression) . '); ?>';
         });
         Blade::directive('jxnShow', function ($expression) {
             return '<?php echo \Jaxon\attr()->show(' . $this->expr($expression) . '); ?>';
         });
-        Blade::directive('jxnHtml', function ($expression) {
-            return '<?php echo \Jaxon\attr()->html(' . $this->expr($expression) . '); ?>';
+        Blade::directive('jxnTarget', function ($expression) {
+            return '<?php echo \Jaxon\attr()->target(' . $expression . '); ?>';
+        });
+        Blade::directive('jxnOn', function ($expression) {
+            return '<?php echo \Jaxon\attr()->on(' . $this->expr($expression) . '); ?>';
         });
 
         // Config source and destination files
