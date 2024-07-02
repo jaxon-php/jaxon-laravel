@@ -2,6 +2,7 @@
 
 namespace Jaxon\Laravel;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Jaxon\App\AppInterface;
 use Jaxon\Exception\SetupException;
@@ -10,10 +11,23 @@ use Jaxon\Laravel\Middleware\AjaxMiddleware;
 use function config;
 use function config_path;
 use function Jaxon\jaxon;
+use function preg_replace;
 use function response;
 
 class JaxonServiceProvider extends ServiceProvider
 {
+    /**
+     * Replace Jaxon functions with their full names
+     *
+     * @param string $expression The directive parameter
+     *
+     * @return string
+     */
+    private function expr(string $expression)
+    {
+        return preg_replace('/([\(\s\,])(rq|jq|js|pm)\(/', '${1}\\Jaxon\\\${2}(', $expression);
+    }
+
     /**
      * Bootstrap the application events.
      *
@@ -21,6 +35,17 @@ class JaxonServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Directives for Jaxon custom attributes
+        Blade::directive('jxnFunc', function ($expression) {
+            return '<?php echo \Jaxon\attr()->func(' . $this->expr($expression) . '); ?>';
+        });
+        Blade::directive('jxnShow', function ($expression) {
+            return '<?php echo \Jaxon\attr()->show(' . $this->expr($expression) . '); ?>';
+        });
+        Blade::directive('jxnHtml', function ($expression) {
+            return '<?php echo \Jaxon\attr()->html(' . $this->expr($expression) . '); ?>';
+        });
+
         // Config source and destination files
         $configSrcFile = __DIR__ . '/../config/config.php';
         $configDstFile = config_path('jaxon.php');
