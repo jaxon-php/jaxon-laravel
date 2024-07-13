@@ -50,6 +50,17 @@ class JaxonServiceProvider extends ServiceProvider
             return '<?php echo \Jaxon\attr()->on(' . $this->expr($expression) . '); ?>';
         });
 
+        // Directives for Jaxon Js and CSS codes
+        Blade::directive('jxnCss', function() {
+            return '<?php echo \Jaxon\jaxon()->css(); ?>';
+        });
+        Blade::directive('jxnJs', function() {
+            return '<?php echo \Jaxon\jaxon()->js(); ?>';
+        });
+        Blade::directive('jxnScript', function($expression) {
+            return '<?php echo \Jaxon\jaxon()->script(' . $expression . '); ?>';
+        });
+
         // Register the Jaxon application
         jaxon()->di()->set(AppInterface::class, function() {
             return $this->app->make(Jaxon::class);
