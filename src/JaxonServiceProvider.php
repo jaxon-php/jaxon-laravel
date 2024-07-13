@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Jaxon\App\AppInterface;
 use Jaxon\Exception\SetupException;
 use Jaxon\Laravel\Middleware\AjaxMiddleware;
+use Jaxon\Laravel\Middleware\ConfigMiddleware;
 
 use function config;
 use function config_path;
@@ -36,17 +37,22 @@ class JaxonServiceProvider extends ServiceProvider
     public function boot()
     {
         // Directives for Jaxon custom attributes
-        Blade::directive('jxnHtml', function ($expression) {
+        Blade::directive('jxnHtml', function($expression) {
             return '<?php echo \Jaxon\attr()->html(' . $this->expr($expression) . '); ?>';
         });
-        Blade::directive('jxnShow', function ($expression) {
+        Blade::directive('jxnShow', function($expression) {
             return '<?php echo \Jaxon\attr()->show(' . $this->expr($expression) . '); ?>';
         });
-        Blade::directive('jxnTarget', function ($expression) {
+        Blade::directive('jxnTarget', function($expression) {
             return '<?php echo \Jaxon\attr()->target(' . $expression . '); ?>';
         });
-        Blade::directive('jxnOn', function ($expression) {
+        Blade::directive('jxnOn', function($expression) {
             return '<?php echo \Jaxon\attr()->on(' . $this->expr($expression) . '); ?>';
+        });
+
+        // Register the Jaxon application
+        jaxon()->di()->set(AppInterface::class, function() {
+            return $this->app->make(Jaxon::class);
         });
 
         // Config source and destination files
@@ -62,26 +68,23 @@ class JaxonServiceProvider extends ServiceProvider
         $router = $this->app->make('router');
 
         // Register the middleware and route
-        $jaxonMiddleware = 'jaxon.ajax';
-        $router->aliasMiddleware($jaxonMiddleware, AjaxMiddleware::class);
-        if(!is_string(($jaxonRoute = config('jaxon.app.request.route', null))))
+        $router->aliasMiddleware('jaxon.config', ConfigMiddleware::class);
+        $router->aliasMiddleware('jaxon.ajax', AjaxMiddleware::class);
+        if(is_string(($jaxonRoute = config('jaxon.app.request.route', null))))
         {
-            return;
+            $jaxonMiddlewares = config('jaxon.app.request.middlewares', []);
+            if(!in_array('jaxon.config', $jaxonMiddlewares))
+            {
+                $jaxonMiddlewares[] = 'jaxon.config';
+            }
+            if(!in_array('jaxon.ajax', $jaxonMiddlewares))
+            {
+                $jaxonMiddlewares[] = 'jaxon.ajax';
+            }
+            $router->post($jaxonRoute, function() {
+                return response()->json([]); // This is not supposed to be executed.
+            })->middleware($jaxonMiddlewares)->name('jaxon');
         }
-
-        $jaxonMiddlewares = config('jaxon.app.request.middlewares', []);
-        if(!in_array($jaxonMiddleware, $jaxonMiddlewares))
-        {
-            $jaxonMiddlewares[] = $jaxonMiddleware;
-        }
-        $router->post($jaxonRoute, function () {
-            return response()->json([]); // This is not supposed to be executed.
-        })->middleware($jaxonMiddlewares)->name('jaxon');
-
-        // Register the Jaxon application
-        jaxon()->di()->set(AppInterface::class, function() {
-            return $this->app->make(Jaxon::class);
-        });
     }
 
     /**

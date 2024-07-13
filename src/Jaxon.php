@@ -15,10 +15,11 @@ use function response;
 class Jaxon extends AbstractApp
 {
     /**
-     * @inheritDoc
+     * Setup the Jaxon library
+     *
      * @throws SetupException
      */
-    public function setup(string $sConfigFile)
+    public function setup()
     {
         // Add the view renderer
         $this->addViewRenderer('blade', '', function () {

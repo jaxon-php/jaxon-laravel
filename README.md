@@ -10,7 +10,7 @@ Installation
 Add the following lines in the `composer.json` file, and run the `composer update` command.
 ```json
 "require": {
-    "jaxon-php/jaxon-laravel": "^4.0"
+    "jaxon-php/jaxon-laravel": "^5.0"
 }
 ```
 
@@ -19,40 +19,26 @@ Publish the package configuration.
 php artisan vendor:publish --tag=config
 ```
 
-Routing and middleware
-----------------------
+Routing and middlewares
+-----------------------
 
-Starting from version `4.1.0`, the library automatically registers the middleware.
-It can be configured to also register its route by adding the `route` and `middlewares` options in the `config/jaxon.php` file.
+The library automatically registers two middlewares, `jaxon.config` and, 'jaxon.ajax'.
+
+The `jaxon.config` middleware must be added to the routes to pages that need to show Jaxon related content.
+
+```php
+Route::get('/', [DemoController::class, 'index'])->name('demo')->middleware(['web', 'jaxon.config']);
+```
+
+It can also be configured to register its route and the associated middlewares by adding the `route` and `middlewares` options in the `config/jaxon.php` file.
 
 ```php
     'app' => [
         'request' => [
             'route' => 'jaxon',
-            'middlewares' => ['web', 'jaxon.ajax'],
+            'middlewares' => ['web'],
         ],
     ],
-```
-
-Register the Jaxon middleware for Laravel in the `app/Http/Kernel.php` file (only for versions prior to `4.1.0`).
-
-```php
-    protected $routeMiddleware = [
-        ...
-        // Jaxon middleware
-        'jaxon.ajax' => \Jaxon\Laravel\Middleware\AjaxMiddleware::class,
-    ];
-```
-
-Add the `jaxon.ajax` middleware to the route which processes Jaxon requests. Set the route name to `jaxon`.
-
-The Jaxon middleware returns the response, so it must be added at the end of the middleware list.
-Also, the code in this route is not supposed to be executed, unless Jaxon fails to process the request.
-
-```php
-Route::post('/jaxon', function () {
-    return response()->json([]); // This is not supposed to be executed.
-})->middleware(['web', 'jaxon.ajax'])->name('jaxon');
 ```
 
 Configuration
