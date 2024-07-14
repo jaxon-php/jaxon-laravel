@@ -15,10 +15,10 @@
 namespace Jaxon\Laravel\Middleware;
 
 use Jaxon\Exception\RequestException;
-use Jaxon\Laravel\Jaxon;
+use Jaxon\Laravel\App\Jaxon;
 use Illuminate\Http\Request;
 use Closure;
- 
+
 class ConfigMiddleware
 {
     /**

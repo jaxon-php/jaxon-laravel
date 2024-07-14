@@ -1,6 +1,6 @@
 <?php
 
-namespace Jaxon\Laravel;
+namespace Jaxon\Laravel\App;
 
 use Jaxon\App\Session\SessionInterface;
 

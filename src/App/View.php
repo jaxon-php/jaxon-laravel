@@ -1,6 +1,6 @@
 <?php
 
-namespace Jaxon\Laravel;
+namespace Jaxon\Laravel\App;
 
 use Illuminate\Support\Facades\View as LaravelView;
 use Jaxon\App\View\Store;

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Jaxon\App\AppInterface;
 use Jaxon\Exception\SetupException;
+use Jaxon\Laravel\App\Jaxon;
 use Jaxon\Laravel\Middleware\AjaxMiddleware;
 use Jaxon\Laravel\Middleware\ConfigMiddleware;
 
