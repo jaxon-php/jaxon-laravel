@@ -2,18 +2,32 @@
 
 namespace Jaxon\Laravel\App;
 
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Log;
 use Jaxon\App\AbstractApp;
 use Jaxon\Exception\SetupException;
-use Illuminate\Support\Facades\Log;
 
 use function config;
 use function route;
 use function asset;
 use function public_path;
+use function preg_replace;
 use function response;
 
 class Jaxon extends AbstractApp
 {
+    /**
+     * Replace Jaxon functions with their full names
+     *
+     * @param string $expression The directive parameter
+     *
+     * @return string
+     */
+    private function expr(string $expression)
+    {
+        return preg_replace('/([\(\s\,])(rq|jq|js|pm)\(/', '${1}\\Jaxon\\\${2}(', $expression);
+    }
+
     /**
      * Setup the Jaxon library
      *
@@ -21,6 +35,31 @@ class Jaxon extends AbstractApp
      */
     public function setup()
     {
+        // Directives for Jaxon custom attributes
+        Blade::directive('jxnHtml', function($expression) {
+            return '<?php echo \Jaxon\attr()->html(' . $this->expr($expression) . '); ?>';
+        });
+        Blade::directive('jxnShow', function($expression) {
+            return '<?php echo \Jaxon\attr()->show(' . $this->expr($expression) . '); ?>';
+        });
+        Blade::directive('jxnTarget', function($expression) {
+            return '<?php echo \Jaxon\attr()->target(' . $expression . '); ?>';
+        });
+        Blade::directive('jxnOn', function($expression) {
+            return '<?php echo \Jaxon\attr()->on(' . $this->expr($expression) . '); ?>';
+        });
+
+        // Directives for Jaxon Js and CSS codes
+        Blade::directive('jxnCss', function() {
+            return '<?php echo \Jaxon\jaxon()->css(); ?>';
+        });
+        Blade::directive('jxnJs', function() {
+            return '<?php echo \Jaxon\jaxon()->js(); ?>';
+        });
+        Blade::directive('jxnScript', function($expression) {
+            return '<?php echo \Jaxon\jaxon()->script(' . $expression . '); ?>';
+        });
+
         // Add the view renderer
         $this->addViewRenderer('blade', '', function () {
             return new View();
