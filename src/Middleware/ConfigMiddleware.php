@@ -19,7 +19,7 @@ use Jaxon\Laravel\App\Jaxon;
 use Illuminate\Http\Request;
 use Closure;
 
-class AjaxMiddleware
+class ConfigMiddleware
 {
     /**
      * @var Jaxon
@@ -47,13 +47,10 @@ class AjaxMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!$this->jaxon->canProcessRequest())
-        {
-            // Unable to find a plugin to process the request
-            return $next($request);
-        }
-        // Process the Jaxon request
-        $this->jaxon->processRequest();
-        return $this->jaxon->httpResponse();
+        // Setup the Jaxon library
+        $this->jaxon->setup();
+
+        // Unable to find a plugin to process the request
+        return $next($request);
     }
 }

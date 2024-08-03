@@ -1,6 +1,6 @@
 <?php
 
-namespace Jaxon\Laravel;
+namespace Jaxon\Laravel\App;
 
 use Illuminate\Support\Facades\View as LaravelView;
 use Jaxon\App\View\Store;
@@ -41,7 +41,11 @@ class View implements ViewInterface
      */
     public function render(Store $store): string
     {
+        $sNamespace = $store->getNamespace();
+        $sViewName = !$sNamespace || $sNamespace === 'blade' ?
+            $store->getViewName() : $sNamespace . '::' . $store->getViewName();
+
         // Render the template
-        return trim(view($store->getViewName(), $store->getViewData()), " \t\n");
+        return trim(view($sViewName, $store->getViewData()), " \t\n");
     }
 }

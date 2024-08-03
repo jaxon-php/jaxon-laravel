@@ -10,7 +10,7 @@
  * @link https://github.com/jaxon-php/jaxon-core
  */
 
-namespace Jaxon\Laravel;
+namespace Jaxon\Laravel\App;
 
 use Psr\Container\ContainerInterface;
 
