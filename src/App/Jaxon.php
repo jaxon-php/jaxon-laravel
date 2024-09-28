@@ -33,7 +33,7 @@ class Jaxon extends AbstractApp
      *
      * @throws SetupException
      */
-    public function setup()
+    public function setup(string $_)
     {
         // Directives for Jaxon custom attributes
         Blade::directive('jxnHtml', function($expression) {
