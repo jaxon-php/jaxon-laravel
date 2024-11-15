@@ -48,6 +48,9 @@ class Jaxon extends AbstractApp
         Blade::directive('jxnClick', function($expression) {
             return '<?php echo \Jaxon\attr()->click(' . $this->expr($expression) . '); ?>';
         });
+        Blade::directive('jxnEvent', function($expression) {
+            return '<?php echo \Jaxon\attr()->event(' . $this->expr($expression) . '); ?>';
+        });
         Blade::directive('jxnTarget', function($expression) {
             return '<?php echo \Jaxon\attr()->target(' . $expression . '); ?>';
         });
