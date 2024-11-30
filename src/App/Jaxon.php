@@ -39,8 +39,8 @@ class Jaxon extends AbstractApp
         Blade::directive('jxnHtml', function($expression) {
             return '<?php echo \Jaxon\attr()->html(' . $this->expr($expression) . '); ?>';
         });
-        Blade::directive('jxnShow', function($expression) {
-            return '<?php echo \Jaxon\attr()->show(' . $this->expr($expression) . '); ?>';
+        Blade::directive('jxnBind', function($expression) {
+            return '<?php echo \Jaxon\attr()->bind(' . $this->expr($expression) . '); ?>';
         });
         Blade::directive('jxnOn', function($expression) {
             return '<?php echo \Jaxon\attr()->on(' . $this->expr($expression) . '); ?>';
