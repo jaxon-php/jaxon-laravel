@@ -4,7 +4,7 @@ namespace Jaxon\Laravel\App;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Log;
-use Jaxon\App\AbstractApp;
+use Jaxon\App\Ajax\AbstractApp;
 use Jaxon\Exception\SetupException;
 
 use function asset;
