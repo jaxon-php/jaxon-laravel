@@ -7,27 +7,14 @@ use Illuminate\Support\Facades\Log;
 use Jaxon\App\AbstractApp;
 use Jaxon\Exception\SetupException;
 
-use function config;
-use function route;
 use function asset;
+use function config;
 use function public_path;
-use function preg_replace;
 use function response;
+use function route;
 
 class Jaxon extends AbstractApp
 {
-    /**
-     * Replace Jaxon functions with their full names
-     *
-     * @param string $expression The directive parameter
-     *
-     * @return string
-     */
-    private function expr(string $expression)
-    {
-        return preg_replace('/([\(\s\,])(rq|jq|js|pm)\(/', '${1}\\Jaxon\\\${2}(', $expression);
-    }
-
     /**
      * Setup the Jaxon library
      *
@@ -37,33 +24,36 @@ class Jaxon extends AbstractApp
     {
         // Directives for Jaxon custom attributes
         Blade::directive('jxnHtml', function($expression) {
-            return '<?php echo \Jaxon\attr()->html(' . $this->expr($expression) . '); ?>';
+            return '<?php echo Jaxon\attr()->html(' . $expression . '); ?>';
         });
         Blade::directive('jxnBind', function($expression) {
-            return '<?php echo \Jaxon\attr()->bind(' . $this->expr($expression) . '); ?>';
+            return '<?php echo Jaxon\attr()->bind(' . $expression . '); ?>';
+        });
+        Blade::directive('jxnPagination', function($expression) {
+            return '<?php echo Jaxon\attr()->pagination(' . $expression . '); ?>';
         });
         Blade::directive('jxnOn', function($expression) {
-            return '<?php echo \Jaxon\attr()->on(' . $this->expr($expression) . '); ?>';
+            return '<?php echo Jaxon\attr()->on(' . $expression . '); ?>';
         });
         Blade::directive('jxnClick', function($expression) {
-            return '<?php echo \Jaxon\attr()->click(' . $this->expr($expression) . '); ?>';
+            return '<?php echo Jaxon\attr()->click(' . $expression . '); ?>';
         });
         Blade::directive('jxnEvent', function($expression) {
-            return '<?php echo \Jaxon\attr()->event(' . $this->expr($expression) . '); ?>';
+            return '<?php echo Jaxon\attr()->event(' . $expression . '); ?>';
         });
         Blade::directive('jxnTarget', function($expression) {
-            return '<?php echo \Jaxon\attr()->target(' . $expression . '); ?>';
+            return '<?php echo Jaxon\attr()->target(' . $expression . '); ?>';
         });
 
         // Directives for Jaxon Js and CSS codes
         Blade::directive('jxnCss', function() {
-            return '<?php echo \Jaxon\jaxon()->css(); ?>';
+            return '<?php echo Jaxon\jaxon()->css(); ?>';
         });
         Blade::directive('jxnJs', function() {
-            return '<?php echo \Jaxon\jaxon()->js(); ?>';
+            return '<?php echo Jaxon\jaxon()->js(); ?>';
         });
         Blade::directive('jxnScript', function($expression) {
-            return '<?php echo \Jaxon\jaxon()->script(' . $expression . '); ?>';
+            return '<?php echo Jaxon\jaxon()->script(' . $expression . '); ?>';
         });
 
         // Add the view renderer

@@ -58,6 +58,12 @@ class JaxonServiceProvider extends ServiceProvider
                 return response()->json([]); // This is not supposed to be executed.
             })->middleware($jaxonMiddlewares)->name('jaxon');
         }
+
+        if(config('jaxon.app.helpers.load', true))
+        {
+            // Load the Jaxon helpers
+            require_once(config('jaxon.app.helpers.path', __DIR__ . '/helpers.php'));
+        }
     }
 
     /**
