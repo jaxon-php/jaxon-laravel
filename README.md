@@ -122,7 +122,6 @@ class HelloWorld extends \Jaxon\App\CallableClass
     public function sayHello()
     {
         $this->response->assign('div2', 'innerHTML', 'Hello World!');
-        return $this->response;
     }
 }
 ```

@@ -12,7 +12,7 @@
     "license": "BSD-3-Clause",
     "require": {
         "jaxon-php/jaxon-core": "dev-main",
-        "illuminate/support": "7.*|8.*|9.*|10.*|11.*"
+        "illuminate/support": "7.*|8.*|9.*|10.*|11.*|12.*"
     },
     "provide": {
         "jaxon-php/jaxon-view-blade": "dev-main"
@@ -20,7 +20,10 @@
     "autoload": {
         "psr-4": {
             "Jaxon\\Laravel\\": "src/"
-        }
+        },
+        "files": [
+            "src/functions.php"
+        ]
     },
     "extra": {
         "laravel": {

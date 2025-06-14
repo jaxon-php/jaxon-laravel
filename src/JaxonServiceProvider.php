@@ -24,9 +24,7 @@ class JaxonServiceProvider extends ServiceProvider
     public function boot()
     {
         // Register the Jaxon application
-        jaxon()->di()->set(AppInterface::class, function() {
-            return $this->app->make(Jaxon::class);
-        });
+        jaxon()->di()->set(AppInterface::class, fn() => $this->app->make(Jaxon::class));
 
         // Config source and destination files
         $configSrcFile = __DIR__ . '/../config/config.php';
@@ -57,12 +55,6 @@ class JaxonServiceProvider extends ServiceProvider
             $router->post($jaxonRoute, function() {
                 return response()->json([]); // This is not supposed to be executed.
             })->middleware($jaxonMiddlewares)->name('jaxon');
-        }
-
-        if(config('jaxon.app.helpers.load', true))
-        {
-            // Load the Jaxon helpers
-            require_once(config('jaxon.app.helpers.path', __DIR__ . '/helpers.php'));
         }
     }
 

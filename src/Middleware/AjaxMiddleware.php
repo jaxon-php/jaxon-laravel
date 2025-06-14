@@ -52,8 +52,8 @@ class AjaxMiddleware
             // Unable to find a plugin to process the request
             return $next($request);
         }
+
         // Process the Jaxon request
-        $this->jaxon->processRequest();
-        return $this->jaxon->httpResponse();
+        return $this->jaxon->processRequest();
     }
 }

@@ -9,6 +9,7 @@ use Jaxon\Exception\SetupException;
 
 use function asset;
 use function config;
+use function Jaxon\jaxon;
 use function public_path;
 use function response;
 use function route;
@@ -20,7 +21,7 @@ class Jaxon extends AbstractApp
      *
      * @throws SetupException
      */
-    public function setup(string $_ = '')
+    public function setup(string $_ = ''): void
     {
         // Directives for Jaxon custom attributes
         Blade::directive('jxnHtml', function($expression) {
@@ -39,10 +40,7 @@ class Jaxon extends AbstractApp
             return '<?php echo Jaxon\attr()->click(' . $expression . '); ?>';
         });
         Blade::directive('jxnEvent', function($expression) {
-            return '<?php echo Jaxon\attr()->event(' . $expression . '); ?>';
-        });
-        Blade::directive('jxnTarget', function($expression) {
-            return '<?php echo Jaxon\attr()->target(' . $expression . '); ?>';
+            return '<?php echo Jaxon\Laravel\setJxnEvent(' . $expression . '); ?>';
         });
 
         // Directives for Jaxon Js and CSS codes
@@ -57,22 +55,19 @@ class Jaxon extends AbstractApp
         });
 
         // Add the view renderer
-        $this->addViewRenderer('blade', '', function () {
-            return new View();
-        });
+        $this->addViewRenderer('blade', '', fn () => new View());
         // Set the session manager
-        $this->setSessionManager(function () {
-            return new Session();
-        });
+        $this->setSessionManager(fn () => new Session());
         // Set the framework service container wrapper
         $this->setContainer(new Container());
         // Set the logger
         $this->setLogger(Log::getLogger());
 
         // The request URI can be set with a named route
-        if(!config('jaxon.lib.core.request.uri') && ($route = config('jaxon.app.request.route', 'jaxon')))
+        if(!config('jaxon.lib.core.request.uri') &&
+            ($route = config('jaxon.app.request.route', 'jaxon')))
         {
-            $this->uri(route($route));
+            jaxon()->setUri(route($route));
         }
 
         // Load Jaxon config settings
@@ -90,7 +85,7 @@ class Jaxon extends AbstractApp
     /**
      * @inheritDoc
      */
-    public function httpResponse(string $sCode = '200')
+    public function httpResponse(string $sCode = '200'): mixed
     {
         // Create and return a Laravel HTTP response
         $httpResponse = response($this->ajaxResponse()->getOutput(), $sCode);
