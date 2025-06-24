@@ -27,7 +27,9 @@ The library automatically registers two middlewares, `jaxon.config` and, 'jaxon.
 The `jaxon.config` middleware must be added to the routes to pages that need to show Jaxon related content.
 
 ```php
-Route::get('/', [DemoController::class, 'index'])->name('demo')->middleware(['web', 'jaxon.config']);
+Route::get('/', [DemoController::class, 'index'])
+    ->middleware(['web', 'jaxon.config'])
+    ->name('demo');
 ```
 
 It can also be configured to register its route and the associated middlewares by adding the `route` and `middlewares` options in the `config/jaxon.php` file.

@@ -9,7 +9,7 @@ use Jaxon\Exception\SetupException;
 
 use function asset;
 use function config;
-use function Jaxon\jaxon;
+use function jaxon;
 use function public_path;
 use function response;
 use function route;
@@ -24,56 +24,42 @@ class Jaxon extends AbstractApp
     public function setup(string $_ = ''): void
     {
         // Directives for Jaxon custom attributes
-        Blade::directive('jxnHtml', function($expression) {
-            return '<?php echo Jaxon\attr()->html(' . $expression . '); ?>';
-        });
-        Blade::directive('jxnBind', function($expression) {
-            return '<?php echo Jaxon\attr()->bind(' . $expression . '); ?>';
-        });
-        Blade::directive('jxnPagination', function($expression) {
-            return '<?php echo Jaxon\attr()->pagination(' . $expression . '); ?>';
-        });
-        Blade::directive('jxnOn', function($expression) {
-            return '<?php echo Jaxon\attr()->on(' . $expression . '); ?>';
-        });
-        Blade::directive('jxnClick', function($expression) {
-            return '<?php echo Jaxon\attr()->click(' . $expression . '); ?>';
-        });
-        Blade::directive('jxnEvent', function($expression) {
-            return '<?php echo Jaxon\Laravel\setJxnEvent(' . $expression . '); ?>';
-        });
+        Blade::directive('jxnHtml', fn($expr) => "<?= Jaxon\attr()->html($expr); ?>");
+        Blade::directive('jxnBind', fn($expr) => "<?= Jaxon\attr()->bind($expr); ?>");
+        Blade::directive('jxnPagination', fn($expr) => "<?= Jaxon\attr()->pagination($expr); ?>");
+        Blade::directive('jxnOn', fn($expr) => "<?= Jaxon\attr()->on($expr); ?>");
+        Blade::directive('jxnClick', fn($expr) => "<?= Jaxon\attr()->click($expr); ?>");
+        Blade::directive('jxnEvent', fn($expr) => "<?= setJxnEvent($expr); ?>");
 
         // Directives for Jaxon Js and CSS codes
-        Blade::directive('jxnCss', function() {
-            return '<?php echo Jaxon\jaxon()->css(); ?>';
-        });
-        Blade::directive('jxnJs', function() {
-            return '<?php echo Jaxon\jaxon()->js(); ?>';
-        });
-        Blade::directive('jxnScript', function($expression) {
-            return '<?php echo Jaxon\jaxon()->script(' . $expression . '); ?>';
-        });
+        Blade::directive('jxnCss', fn() => '<?= Jaxon\jaxon()->css(); ?>');
+        Blade::directive('jxnJs', fn() => '<?= Jaxon\jaxon()->js(); ?>');
+        Blade::directive('jxnScript', fn($expr) => "<?= Jaxon\jaxon()->script($expr); ?>");
 
         // Add the view renderer
-        $this->addViewRenderer('blade', '', fn () => new View());
+        $this->addViewRenderer('blade', '', fn() => new View());
         // Set the session manager
-        $this->setSessionManager(fn () => new Session());
+        $this->setSessionManager(fn() => new Session());
         // Set the framework service container wrapper
         $this->setContainer(new Container());
         // Set the logger
         $this->setLogger(Log::getLogger());
 
+        $jaxon = jaxon();
         // The request URI can be set with a named route
         if(!config('jaxon.lib.core.request.uri') &&
             ($route = config('jaxon.app.request.route', 'jaxon')))
         {
-            jaxon()->setUri(route($route));
+            $jaxon->setUri(route($route));
         }
 
         // Load Jaxon config settings
         $aLibOptions = config('jaxon.lib', []);
         $aAppOptions = config('jaxon.app', []);
         $bExport = $bMinify = !config('app.debug', false);
+
+        // Always load the global functions.
+        $jaxon->setAppOption('helpers.global', true);
 
         $this->bootstrap()
             ->lib($aLibOptions)

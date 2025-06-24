@@ -1,10 +1,5 @@
 <?php
 
-namespace Jaxon\Laravel;
-
-use function is_array;
-use function Jaxon\attr;
-
 /**
  * Set event handlers
  *

@@ -11,11 +11,11 @@
     "keywords": ["Ajax", "Jaxon", "PHP", "Laravel"],
     "license": "BSD-3-Clause",
     "require": {
-        "jaxon-php/jaxon-core": "dev-main",
+        "jaxon-php/jaxon-core": "^5.0",
         "illuminate/support": "7.*|8.*|9.*|10.*|11.*|12.*"
     },
     "provide": {
-        "jaxon-php/jaxon-view-blade": "dev-main"
+        "jaxon-php/jaxon-view-blade": "^5.0"
     },
     "autoload": {
         "psr-4": {

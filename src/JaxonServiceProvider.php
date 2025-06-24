@@ -3,7 +3,7 @@
 namespace Jaxon\Laravel;
 
 use Illuminate\Support\ServiceProvider;
-use Jaxon\App\AppInterface;
+use Jaxon\App\Ajax\AppInterface;
 use Jaxon\Exception\SetupException;
 use Jaxon\Laravel\App\Jaxon;
 use Jaxon\Laravel\Middleware\AjaxMiddleware;
