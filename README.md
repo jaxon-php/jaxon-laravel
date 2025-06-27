@@ -7,7 +7,7 @@ It works with Laravel version 7 or newer.
 Installation
 ------------
 
-Add the following lines in the `composer.json` file, and run the `composer update` command.
+Add the following lines in the `composer.json` file, and run the `composer update jaxon-php/*` command.
 ```json
 "require": {
     "jaxon-php/jaxon-laravel": "^5.0"
@@ -15,7 +15,7 @@ Add the following lines in the `composer.json` file, and run the `composer updat
 ```
 
 Publish the package configuration.
-```php
+```bash
 php artisan vendor:publish --tag=config
 ```
 
