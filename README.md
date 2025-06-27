@@ -103,7 +103,7 @@ The `@jxnPagination` directive displays pagination links in a view.
 The `@jxnOn` directive binds an event on a DOM node to a Javascript call defined with a `call factory`.
 
 ```php
-    <select class="form-control"
+    <select class="form-select"
         @jxnOn('change', $rqAppTest->setColor(jq()->val()))>
         <option value="black" selected="selected">Black</option>
         <option value="red">Red</option>
