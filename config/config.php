@@ -7,7 +7,8 @@ return [
             'middlewares' => ['web', 'jaxon.ajax'],
         ],
         'directories' => [
-            // base_path('jaxon/ajax') => [
+            // [
+            //     'path' => base_path('ajax'),
             //     'namespace' => '\\Jaxon\\Ajax',
             //     // 'separator' => '', // '.' or '_'
             //     // 'protected' => [],

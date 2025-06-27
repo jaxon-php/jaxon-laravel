@@ -17,24 +17,32 @@ use function route;
 class Jaxon extends AbstractApp
 {
     /**
+     * @return void
+     */
+    private function createDirectives(): void
+    {
+        // Directives for Jaxon Js and CSS codes
+        Blade::directive('jxnCss', fn() => '<?= Jaxon\jaxon()->css(); ?>');
+        Blade::directive('jxnJs', fn() => '<?= Jaxon\jaxon()->js(); ?>');
+        Blade::directive('jxnScript', fn($expr) => "<?= Jaxon\jaxon()->script($expr); ?>");
+
+        // Directives for Jaxon custom attributes
+        Blade::directive('jxnBind', fn($expr) => "<?= Jaxon\attr()->bind($expr); ?>");
+        Blade::directive('jxnHtml', fn($expr) => "<?= Jaxon\attr()->html($expr); ?>");
+        Blade::directive('jxnPagination', fn($expr) => "<?= Jaxon\attr()->pagination($expr); ?>");
+        Blade::directive('jxnOn', fn($expr) => "<?= Jaxon\attr()->on($expr); ?>");
+        Blade::directive('jxnClick', fn($expr) => "<?= Jaxon\attr()->click($expr); ?>");
+        Blade::directive('jxnEvent', fn($expr) => "<?= setJxnEvent($expr); ?>");
+    }
+
+    /**
      * Setup the Jaxon library
      *
      * @throws SetupException
      */
     public function setup(string $_ = ''): void
     {
-        // Directives for Jaxon custom attributes
-        Blade::directive('jxnHtml', fn($expr) => "<?= Jaxon\attr()->html($expr); ?>");
-        Blade::directive('jxnBind', fn($expr) => "<?= Jaxon\attr()->bind($expr); ?>");
-        Blade::directive('jxnPagination', fn($expr) => "<?= Jaxon\attr()->pagination($expr); ?>");
-        Blade::directive('jxnOn', fn($expr) => "<?= Jaxon\attr()->on($expr); ?>");
-        Blade::directive('jxnClick', fn($expr) => "<?= Jaxon\attr()->click($expr); ?>");
-        Blade::directive('jxnEvent', fn($expr) => "<?= setJxnEvent($expr); ?>");
-
-        // Directives for Jaxon Js and CSS codes
-        Blade::directive('jxnCss', fn() => '<?= Jaxon\jaxon()->css(); ?>');
-        Blade::directive('jxnJs', fn() => '<?= Jaxon\jaxon()->js(); ?>');
-        Blade::directive('jxnScript', fn($expr) => "<?= Jaxon\jaxon()->script($expr); ?>");
+        $this->createDirectives();
 
         // Add the view renderer
         $this->addViewRenderer('blade', '', fn() => new View());
@@ -76,7 +84,6 @@ class Jaxon extends AbstractApp
         // Create and return a Laravel HTTP response
         $httpResponse = response($this->ajaxResponse()->getOutput(), $sCode);
         $httpResponse->header('Content-Type', $this->getContentType());
-
         return $httpResponse;
     }
 }
