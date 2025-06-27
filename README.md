@@ -56,7 +56,7 @@ The `route` option is overriden by the `core.request.uri` option of the Jaxon li
 Usage
 -----
 
-Insert Jaxon js and css codes in the pages that need to show Jaxon related content, using the `Blade` functions provided by the Jaxon package.
+This extension registers the following Blade directives to insert Jaxon js and css codes in the pages that need to show Jaxon related content.
 
 ```php
 // resources/views/demo/index.blade.php
@@ -123,9 +123,9 @@ The `@jxnEvent` directive defines a set of events handlers on the children of a 
 
 ```php
     <div class="row" @jxnEvent([
-            ['.app-color-choice', 'change', $rqAppTest->setColor(jq()->val())]
-            ['.ext-color-choice', 'change', $rqExtTest->setColor(jq()->val())]
-        ])>
+        ['.app-color-choice', 'change', $rqAppTest->setColor(jq()->val())]
+        ['.ext-color-choice', 'change', $rqExtTest->setColor(jq()->val())]
+    ])>
         <div class="col-md-12">
             <select class="form-control app-color-choice">
                 <option value="black" selected="selected">Black</option>
@@ -145,7 +145,7 @@ The `@jxnEvent` directive defines a set of events handlers on the children of a 
     </div>
 ```
 
-The `@jxnEvent` directive takes s parameter an array in which each entry is an array with a `jQuery` selector, an event and a `call factory`.
+The `@jxnEvent` directive takes as parameter an array in which each entry is an array with a `jQuery` selector, an event and a `call factory`.
 
 Contribute
 ----------
