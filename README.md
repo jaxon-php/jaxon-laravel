@@ -1,7 +1,7 @@
 Jaxon integration for Laravel
 =============================
 
-This package integrates the [Jaxon library](https://github.com/jaxon-php/jaxon-core) into the Laravel framework.
+This package is an extension to integrate the [Jaxon library](https://github.com/jaxon-php/jaxon-core) into the Laravel framework.
 It works with Laravel version 7 or newer.
 
 Installation
@@ -19,10 +19,18 @@ Publish the package configuration.
 php artisan vendor:publish --tag=config
 ```
 
+Configuration
+-------------
+
+The library configuration is located in the `config/jaxon.php` file.
+It must contain both the `app` and `lib` sections defined in the documentation (https://www.jaxon-php.org/docs/v5x/about/configuration.html).
+
+An example is presented in the `config/config.php` file of this repo.
+
 Routing and middlewares
 -----------------------
 
-The library automatically registers two middlewares, `jaxon.config` and, 'jaxon.ajax'.
+The extension automatically registers two middlewares, `jaxon.config` and, 'jaxon.ajax'.
 
 The `jaxon.config` middleware must be added to the routes to pages that need to show Jaxon related content.
 
@@ -32,7 +40,7 @@ Route::get('/', [DemoController::class, 'index'])
     ->name('demo');
 ```
 
-It can also be configured to register its route and the associated middlewares by adding the `route` and `middlewares` options in the `config/jaxon.php` file.
+The extension can also be configured to register its route and the associated middlewares by adding the `route` and `middlewares` options in the `config/jaxon.php` file.
 
 ```php
     'app' => [
@@ -43,31 +51,6 @@ It can also be configured to register its route and the associated middlewares b
     ],
 ```
 
-Configuration
--------------
-
-The settings in the `jaxon.php` config file are separated into two sections.
-The options in the `lib` section are those of the Jaxon core library, while the options in the `app` sections are those of the Laravel application.
-
-The following options can be defined in the `app` section of the config file.
-
-| Name | Description |
-|------|---------------|
-| directories | An array of directory containing Jaxon application classes |
-| views   | An array of directory containing Jaxon application views |
-| | | |
-
-By default, the `views` array is empty. Views are rendered from the framework default location.
-There's a single entry in the `directories` array with the following values.
-
-| Name | Default value | Description |
-|------|---------------|-------------|
-| directory | app_path('Jaxon/App') | The directory of the Jaxon classes |
-| namespace | \Jaxon\App  | The namespace of the Jaxon classes |
-| separator | .           | The separator in Jaxon class names |
-| protected | empty array | Prevent Jaxon from exporting some methods |
-| | | |
-
 The `route` option is overriden by the `core.request.uri` option of the Jaxon library.
 
 Usage
@@ -76,23 +59,9 @@ Usage
 Insert Jaxon js and css codes in the pages that need to show Jaxon related content, using the `Blade` functions provided by the Jaxon package.
 
 ```php
-class DemoController extends Controller
-{
-    public function index()
-    {
-        // Print the page
-        return view('demo/index', [
-            'pageTitle' => "Laravel Framework",
-        ]);
-    }
-}
-```
-
-```php
 // resources/views/demo/index.blade.php
 
 <!-- In page header -->
-
 @jxnCss()
 </head>
 
@@ -103,30 +72,80 @@ class DemoController extends Controller
 </body>
 
 <!-- In page footer -->
-
 @jxnJs()
 
 @jxnScript()
 ```
 
-### The Jaxon classes
+Call factories
+--------------
 
-The Jaxon classes can inherit from `\Jaxon\App\CallableClass`.
-By default, they are located in the `app/Jaxon/App` dir of the Laravel application, and the associated namespace is `\Jaxon\App`.
+This extension registers the following Blade directives for Jaxon [call factories](https://www.jaxon-php.org/docs/v5x/ui-features/call-factories.html) functions.
 
-This is a simple example of a Jaxon class, defined in the `app/Jaxon/App/HelloWorld.php` file.
+> [!NOTE]
+> In the following examples, the `$rqAppTest` var in the template is set to the value `rq(Demo\Ajax\App\AppTest::class)`.
+
+The `@jxnBind` directive attaches a UI component to a DOM node, while the `@jxnHtml` directive displays a component HTML code in a view.
 
 ```php
-namespace Jaxon\App;
-
-class HelloWorld extends \Jaxon\App\CallableClass
-{
-    public function sayHello()
-    {
-        $this->response->assign('div2', 'innerHTML', 'Hello World!');
-    }
-}
+    <div class="col-md-12" @jxnBind($rqAppTest)>
+        @jxnHtml($rqAppTest)
+    </div>
 ```
+
+The `@jxnPagination` directive displays pagination links in a view.
+
+```php
+    <div class="col-md-12" @jxnPagination($rqAppTest)>
+    </div>
+```
+
+The `@jxnOn` directive binds an event on a DOM node to a Javascript call defined with a `call factory`.
+
+```php
+    <select class="form-control"
+        @jxnOn('change', $rqAppTest->setColor(jq()->val()))>
+        <option value="black" selected="selected">Black</option>
+        <option value="red">Red</option>
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+    </select>
+```
+
+The `@jxnClick` directive is a shortcut to define a handler for the `click` event on a DOM node.
+
+```php
+    <button type="button" class="btn btn-primary"
+        @jxnClick($rqAppTest->sayHello(true))>Click me</button>
+```
+
+The `@jxnEvent` directive defines a set of events handlers on the children of a DOM nodes, using `jQuery` selectors.
+
+```php
+    <div class="row" @jxnEvent([
+            ['.app-color-choice', 'change', $rqAppTest->setColor(jq()->val())]
+            ['.ext-color-choice', 'change', $rqExtTest->setColor(jq()->val())]
+        ])>
+        <div class="col-md-12">
+            <select class="form-control app-color-choice">
+                <option value="black" selected="selected">Black</option>
+                <option value="red">Red</option>
+                <option value="green">Green</option>
+                <option value="blue">Blue</option>
+            </select>
+        </div>
+        <div class="col-md-12">
+            <select class="form-control ext-color-choice">
+                <option value="black" selected="selected">Black</option>
+                <option value="red">Red</option>
+                <option value="green">Green</option>
+                <option value="blue">Blue</option>
+            </select>
+        </div>
+    </div>
+```
+
+The `@jxnEvent` directive takes s parameter an array in which each entry is an array with a `jQuery` selector, an event and a `call factory`.
 
 Contribute
 ----------
