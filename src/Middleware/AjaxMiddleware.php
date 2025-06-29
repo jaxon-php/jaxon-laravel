@@ -22,19 +22,12 @@ use Closure;
 class AjaxMiddleware
 {
     /**
-     * @var Jaxon
-     */
-    private $jaxon;
-
-    /**
      * The constructor
      *
      * @param Jaxon $jaxon
      */
-    public function __construct(Jaxon $jaxon)
-    {
-        $this->jaxon = $jaxon;
-    }
+    public function __construct(private Jaxon $jaxon)
+    {}
 
     /**
      * Handle the incoming request.

@@ -12,7 +12,6 @@ use Jaxon\Laravel\Middleware\ConfigMiddleware;
 use function config;
 use function config_path;
 use function in_array;
-use function is_string;
 use function jaxon;
 use function response;
 
@@ -52,13 +51,13 @@ class JaxonServiceProvider extends ServiceProvider
         {
             $jaxonMiddlewares[] = 'jaxon.ajax';
         }
-        $route = $router->post(config('jaxon.lib.core.request.uri'),
-                fn() => response()->json([])) // This is not supposed to be executed.
-            ->middleware($jaxonMiddlewares);
-        if(is_string(($routeName = config('jaxon.app.request.route', null))))
-        {
-            $route->name($routeName);
-        }
+        $routePath = config('jaxon.lib.core.request.uri');
+        $routeName = config('jaxon.app.request.route', 'jaxon.ajax');
+        $router
+            // This is not supposed to be executed, since the middleware will process the request.
+            ->post($routePath, fn() => response()->json([]))
+            ->middleware($jaxonMiddlewares)
+            ->name($routeName);
     }
 
     /**
@@ -70,10 +69,6 @@ class JaxonServiceProvider extends ServiceProvider
     public function register()
     {
         // Register the Jaxon singleton
-        $this->app->singleton(Jaxon::class, function() {
-            $jaxon = new Jaxon();
-            $jaxon->setup('');
-            return $jaxon;
-        });
+        $this->app->singleton(Jaxon::class, fn() => new Jaxon());
     }
 }
