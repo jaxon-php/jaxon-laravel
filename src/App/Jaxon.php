@@ -12,7 +12,6 @@ use function config;
 use function jaxon;
 use function public_path;
 use function response;
-use function route;
 
 class Jaxon extends AbstractApp
 {
@@ -53,21 +52,13 @@ class Jaxon extends AbstractApp
         // Set the logger
         $this->setLogger(Log::getLogger());
 
-        $jaxon = jaxon();
-        // The request URI can be set with a named route
-        if(!config('jaxon.lib.core.request.uri') &&
-            ($route = config('jaxon.app.request.route', 'jaxon')))
-        {
-            $jaxon->setUri(route($route));
-        }
-
         // Load Jaxon config settings
         $aLibOptions = config('jaxon.lib', []);
         $aAppOptions = config('jaxon.app', []);
         $bExport = $bMinify = !config('app.debug', false);
 
         // Always load the global functions.
-        $jaxon->setAppOption('helpers.global', true);
+        jaxon()->setAppOption('helpers.global', true);
 
         $this->bootstrap()
             ->lib($aLibOptions)

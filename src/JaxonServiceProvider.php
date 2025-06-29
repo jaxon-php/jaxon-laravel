@@ -11,7 +11,9 @@ use Jaxon\Laravel\Middleware\ConfigMiddleware;
 
 use function config;
 use function config_path;
-use function Jaxon\jaxon;
+use function in_array;
+use function is_string;
+use function jaxon;
 use function response;
 
 class JaxonServiceProvider extends ServiceProvider
@@ -41,20 +43,21 @@ class JaxonServiceProvider extends ServiceProvider
         // Register the middleware and route
         $router->aliasMiddleware('jaxon.config', ConfigMiddleware::class);
         $router->aliasMiddleware('jaxon.ajax', AjaxMiddleware::class);
-        if(is_string(($jaxonRoute = config('jaxon.app.request.route', null))))
+        $jaxonMiddlewares = config('jaxon.app.request.middlewares', []);
+        if(!in_array('jaxon.config', $jaxonMiddlewares))
         {
-            $jaxonMiddlewares = config('jaxon.app.request.middlewares', []);
-            if(!in_array('jaxon.config', $jaxonMiddlewares))
-            {
-                $jaxonMiddlewares[] = 'jaxon.config';
-            }
-            if(!in_array('jaxon.ajax', $jaxonMiddlewares))
-            {
-                $jaxonMiddlewares[] = 'jaxon.ajax';
-            }
-            $router->post($jaxonRoute, function() {
-                return response()->json([]); // This is not supposed to be executed.
-            })->middleware($jaxonMiddlewares)->name('jaxon');
+            $jaxonMiddlewares[] = 'jaxon.config';
+        }
+        if(!in_array('jaxon.ajax', $jaxonMiddlewares))
+        {
+            $jaxonMiddlewares[] = 'jaxon.ajax';
+        }
+        $route = $router->post(config('jaxon.lib.core.request.uri'),
+                fn() => response()->json([])) // This is not supposed to be executed.
+            ->middleware($jaxonMiddlewares);
+        if(is_string(($routeName = config('jaxon.app.request.route', null))))
+        {
+            $route->name($routeName);
         }
     }
 
