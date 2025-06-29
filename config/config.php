@@ -3,7 +3,7 @@
 return [
     'app' => [
         'request' => [
-            'route' => 'jaxon',
+            'route' => 'jaxon', // The route name
             'middlewares' => ['web', 'jaxon.ajax'],
         ],
         'directories' => [
@@ -21,6 +21,9 @@ return [
             'encoding' => 'UTF-8',
             'prefix' => [
                 'class' => '',
+            ],
+            'request' => [
+                'uri' => '/jaxon', // The route url
             ],
             'debug' => [
                 'on' => false,

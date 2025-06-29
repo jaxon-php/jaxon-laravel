@@ -40,18 +40,25 @@ Route::get('/', [DemoController::class, 'index'])
     ->name('demo');
 ```
 
-The extension can also be configured to register its route and the associated middlewares by adding the `route` and `middlewares` options in the `config/jaxon.php` file.
+The extension also registers the Jaxon requests route and the associated middlewares.
+
+The route url is the value of the `lib.core.request.uri` option, the `app.request.route` gives an optional name to the route, and the `app.request.middlewares` option defines additional middlewares.
 
 ```php
     'app' => [
         'request' => [
-            'route' => 'jaxon',
+            'route' => 'jaxon', // The route name
             'middlewares' => ['web'],
         ],
     ],
+    'lib' => [
+        'core' => [
+            'request' => [
+                'uri' => '/jaxon', // The route url
+            ],
+        ],
+    ],
 ```
-
-The `route` option is overriden by the `core.request.uri` option of the Jaxon library.
 
 Usage
 -----
@@ -66,9 +73,7 @@ This extension registers the following Blade directives to insert Jaxon js and c
 </head>
 
 <body>
-
 <!-- Page content here -->
-
 </body>
 
 <!-- In page footer -->
