@@ -3,7 +3,7 @@
 return [
     'app' => [
         'request' => [
-            'route' => 'jaxon', // The route name
+            'route' => 'jaxon.ajax', // The route name
             'middlewares' => ['web', 'jaxon.ajax'],
         ],
         'directories' => [

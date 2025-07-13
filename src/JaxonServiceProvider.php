@@ -12,6 +12,7 @@ use Jaxon\Laravel\Middleware\ConfigMiddleware;
 use function config;
 use function config_path;
 use function in_array;
+use function is_array;
 use function jaxon;
 use function response;
 
@@ -42,6 +43,13 @@ class JaxonServiceProvider extends ServiceProvider
         // Register the middleware and route
         $router->aliasMiddleware('jaxon.config', ConfigMiddleware::class);
         $router->aliasMiddleware('jaxon.ajax', AjaxMiddleware::class);
+
+        // Do not create the route if its config section is not present.
+        if(!is_array(config('jaxon.app.request')))
+        {
+            return;
+        }
+
         $jaxonMiddlewares = config('jaxon.app.request.middlewares', []);
         if(!in_array('jaxon.config', $jaxonMiddlewares))
         {
