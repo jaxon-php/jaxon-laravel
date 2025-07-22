@@ -20,7 +20,7 @@ class View implements ViewInterface
      *
      * @return void
      */
-    public function addNamespace(string $sNamespace, string $sDirectory, string $sExtension = '')
+    public function addNamespace(string $sNamespace, string $sDirectory, string $sExtension = ''): void
     {
         if(($sNamespace) && ($sDirectory))
         {

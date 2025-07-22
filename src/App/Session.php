@@ -9,9 +9,7 @@ use function session;
 class Session implements SessionInterface
 {
     /**
-     * Get the current session id
-     *
-     * @return string           The session id
+     * @inheritDoc
      */
     public function getId(): string
     {
@@ -19,13 +17,9 @@ class Session implements SessionInterface
     }
 
     /**
-     * Generate a new session id
-     *
-     * @param bool          $bDeleteData         Whether to delete data from the previous session
-     *
-     * @return void
+     * @inheritDoc
      */
-    public function newId($bDeleteData = false)
+    public function newId(bool $bDeleteData = false): void
     {
         if($bDeleteData)
         {
@@ -35,47 +29,31 @@ class Session implements SessionInterface
     }
 
     /**
-     * Save data in the session
-     *
-     * @param string        $sKey                The session key
-     * @param string        $xValue              The session value
-     *
-     * @return void
+     * @inheritDoc
      */
-    public function set($sKey, $xValue)
+    public function set(string $sKey, mixed $xValue): void
     {
         session([$sKey => $xValue]);
     }
 
     /**
-     * Check if a session key exists
-     *
-     * @param string        $sKey                The session key
-     *
-     * @return bool             True if the session key exists, else false
+     * @inheritDoc
      */
-    public function has($sKey): bool
+    public function has(string $sKey): bool
     {
         return session()->exists($sKey);
     }
 
     /**
-     * Get data from the session
-     *
-     * @param string        $sKey                The session key
-     * @param string        $xDefault            The default value
-     *
-     * @return mixed|$xDefault             The data under the session key, or the $xDefault parameter
+     * @inheritDoc
      */
-    public function get($sKey, $xDefault = null)
+    public function get(string $sKey, mixed $xDefault = null): mixed
     {
         return session($sKey, $xDefault);
     }
 
     /**
-     * Get all data in the session
-     *
-     * @return array             An array of all data in the session
+     * @inheritDoc
      */
     public function all(): array
     {
@@ -83,23 +61,17 @@ class Session implements SessionInterface
     }
 
     /**
-     * Delete a session key and its data
-     *
-     * @param string        $sKey                The session key
-     *
-     * @return void
+     * @inheritDoc
      */
-    public function delete($sKey)
+    public function delete(string $sKey): void
     {
         session()->forget($sKey);
     }
 
     /**
-     * Delete all data in the session
-     *
-     * @return void
+     * @inheritDoc
      */
-    public function clear()
+    public function clear(): void
     {
         session()->flush();
     }
