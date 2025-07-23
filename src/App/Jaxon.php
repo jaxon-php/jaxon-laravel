@@ -32,6 +32,7 @@ class Jaxon extends AbstractApp
         Blade::directive('jxnOn', fn($expr) => "<?= Jaxon\attr()->on($expr); ?>");
         Blade::directive('jxnClick', fn($expr) => "<?= Jaxon\attr()->click($expr); ?>");
         Blade::directive('jxnEvent', fn($expr) => "<?= setJxnEvent($expr); ?>");
+        Blade::directive('jxnPackage', fn($expr) => "<?= Jaxon\attr()->package($expr); ?>");
     }
 
     /**
